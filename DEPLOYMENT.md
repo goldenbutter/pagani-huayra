@@ -40,7 +40,16 @@ Confirm public DNS, successful verification and HTTPS before reporting the custo
 
 ## Analytics
 
-The official `@vercel/analytics` SDK is integrated in the root layout, covering the homepage and `/teaser`. Dashboard enablement is left for the user, as requested. Open [Web Analytics](https://vercel.com/i-bithun/pagani-huayra/analytics) and select Enable. If Vercel prompts for a redeployment after enabling, redeploy the current `main` build so the analytics endpoints are installed. Verify a normal browser visit reaches the dashboard; headless visits may be filtered. SDK installation alone is not evidence of collected views.
+The official `@vercel/analytics` SDK is integrated in the root layout, covering the homepage and `/teaser`. Web Analytics was enabled by the operator on 29 October 2026. The existing deployed integration needed no extra code change or redeployment after enablement.
+
+Verified on 29 October 2026: `/_vercel/insights/script.js` returns JavaScript successfully. One ordinary Chrome verification session visited `/` and `/teaser`; Vercel's metrics API and the actual [Web Analytics dashboard](https://vercel.com/i-bithun/pagani-huayra/analytics) both showed **1 unique visitor and 2 page views**, with one view per path. These are verification visits, not claimed organic audience traffic. Headless requests were not used as evidence of recorded views.
+
+Recheck counts with the authenticated CLI:
+
+```sh
+vercel metrics vercel.analytics.page_view.count --since 1h --group-by requestPath --project pagani-huayra --environment production --scope i-bithun
+vercel metrics vercel.analytics.page_view.count --aggregation unique/visitorId --since 1h --granularity 1h --project pagani-huayra --environment production --scope i-bithun
+```
 
 ## Repository and deployment scope
 
@@ -52,7 +61,7 @@ The README preview links to a native video player with playback controls. All so
 
 The GitHub push of `7a2e173` automatically produced deployment `dpl_3z46q6bVS7b4rZEHJnV6LBLaskMQ`, READY in production. This confirmed the Git integration, not only a manual CLI deployment. The public mirror returned HTTP 200 for the homepage, player, MP4 and runtime WebP frames. The README GIF also returned HTTP 200 from GitHub.
 
-Chromium and WebKit passed the live player/homepage checks on desktop and phone: video duration and real playback, social/canonical metadata, the fully exploded scroll frame, layout fit, zero player axe violations and no page errors. Custom-domain verification is complete. Analytics collection remains unverified.
+Chromium and WebKit passed the live player/homepage checks on desktop and phone: video duration and real playback, social/canonical metadata, the fully exploded scroll frame, layout fit, zero player axe violations and no page errors. Custom-domain verification is complete. Analytics collection was subsequently verified as recorded above.
 
 ## Social previews
 

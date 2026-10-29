@@ -9,3 +9,6 @@
 /.vercel/
 /node_modules/
 /.next/
+
+/output/
+/tmp/

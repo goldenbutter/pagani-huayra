@@ -133,3 +133,9 @@ The update adds explicit secure image URL, JPEG type, site name, locale and Twit
 ## Social card background blend
 
 The OG generator previously feathered only the top and bottom of the photograph, leaving visible vertical edges against the card background. It now intersects horizontal and vertical CSS masks before capturing the card. The source car photograph and earlier social JPEGs are preserved. The new `pagani-og-v3.jpg` was visually reviewed at 1200 × 630: the hard rectangular boundary is removed and the full car remains visible.
+
+## Analytics collection and local production guide
+
+On 29 October 2026, the operator enabled Web Analytics. The existing SDK served its script successfully, and one ordinary Chrome session visited `/` and `/teaser`. Both the metrics API and actual dashboard showed one unique visitor and two page views, one for each path. These were verification visits; no fabricated events or automation-detection bypass was used. No application-code change was necessary.
+
+The local three-step guide is saved in `output/pdf/` with its reusable Markdown prompts and generator. All 14 final PDF pages were rendered and visually reviewed. Text extraction verified selectable prompts, operator placeholders, no personal account/domain identifiers in prompt text, and 14 bookmarks. Actual sample artwork and website captures remain visibly labelled as examples. The guide and intermediate renders are excluded from Git/Vercel publication.

@@ -17,3 +17,7 @@ __pycache__/
 *.log
 .venv/
 .vercel
+
+# Local guide deliverables and PDF review renders
+/output/pdf/
+/tmp/pdfs/
