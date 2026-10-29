@@ -68,3 +68,11 @@ The cinematic stages now use a left narrative/right film composition on desktop,
 `npm run test:chapters` passed ten combinations: Chromium and WebKit at 1440 × 1000, 834 × 1194, 390 × 844, 360 × 740 and 844 × 390. It checks the origin, material, overhead, door and power chapters, return/backward scrolling, text fit, separate desktop columns, selected part descriptions and page errors. A delayed-frame check holds the matching opening narrative during a 2.2-second frame delay, then advances only when the door frame is painted.
 
 The eight-layout existing scroll suite and six navigation/specification cases passed. Four axe A/AA scans passed, including reduced motion and the settled exploded chapter. Contrast scans wait for the brief text transition to finish rather than sampling a fading intermediate frame. Desktop, phone and landscape chapter screenshots were visually reviewed. Evidence: `analysis/chapters/`, `analysis/chapters-regression.log`, `analysis/chapters-a11y.log` and `analysis/split-build.log`.
+
+## Expanding eight-view gallery: 29 October 2026
+
+The craftsmanship area now adapts the premium lodge's click-to-expand gallery. Eight original red-car studies use lazy-loaded 800px/1600px WebP derivatives, totalling about 947 KB across both sizes. Originals and drafts remain untouched outside the public directory.
+
+Lint, typecheck and production build passed. `npm run test:gallery` passed eight Chromium/WebKit cases: desktop (1440 × 1000), tablet (834 × 1194), phone (390 × 844) and small phone with reduced motion (360 × 740). Checks covered all eight selections, decoded responsive images, captions fitting, one active colour panel, keyboard arrows/Home/End/Space, fixed gallery height across selections, no horizontal overflow or page errors, reduced-motion transitions, and gallery-scoped axe A/AA scans. Desktop and phone screenshots were visually reviewed, including the section heading and the preserved space before the travelling-car dock.
+
+The existing eight-layout scroll suite, six navigation/specification cases and four whole-page axe scans also passed against the updated production build. Evidence: `analysis/gallery/report.json`, `analysis/gallery/*.png` and `analysis/studio-verification/`. Physical-device testing remains unperformed.

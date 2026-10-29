@@ -6,6 +6,7 @@ import { carData } from "@/data/carData";
 import { POSTER, filmState, filmStory, partLabels, partFacts, type FilmId } from "@/data/studio";
 import { useExperience } from "./ExperienceProvider";
 import TravellingCar from "./TravellingCar";
+import CarGallery from "./CarGallery";
 
 export function CarSlot({ id, className = "" }: { id: string; className?: string }) {
   return <div className={`car-dock ${className}`} data-car-slot={id}>
@@ -98,7 +99,7 @@ export default function RedExperience() {
     <section id="craftsmanship" className="craft-studio">
       <SectionLabel number="04">THE HUMAN TOUCH</SectionLabel>
       <div className="craft-title"><Reveal><span className="eyebrow accent">BEYOND THE SURFACE</span><h2>The details<br /><span>make the difference.</span></h2></Reveal><p>Carbon weave, precise stitching and machined metal. An entire world, considered one detail at a time.</p></div>
-      <div className="detail-grid"><figure><div><img src="/assets/studio/desktop/0552.webp" alt="Overhead detail of the red bodywork and exposed carbon roof" width="1280" height="720" loading="lazy" /></div><figcaption><span>01 / A VIEW FROM ABOVE</span><span>CARBON &amp; COLOUR ↗</span></figcaption></figure><figure><div><img src="/assets/studio/desktop/0792.webp" alt="Open cockpit and V12 engine from the rear-left viewpoint" width="1280" height="720" loading="lazy" /></div><figcaption><span>02 / OPEN TO DISCOVERY</span><span>THE MECHANICAL HEART ↗</span></figcaption></figure></div>
+      <CarGallery />
       <CarSlot id="craft" />
     </section>
     <section id="inquire" className="red-finale">

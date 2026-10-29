@@ -8,6 +8,7 @@ import "@fontsource/rajdhani/700.css";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import "./studio.css";
+import "./gallery.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://demo-pagani.ibithun.com"),
   title: "Huayra BC: The Art of Performance | iBithun Concept",

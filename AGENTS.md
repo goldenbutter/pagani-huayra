@@ -24,6 +24,8 @@ The active design is one red Huayra BC on a `#fbfbfb` studio surface. Do not res
 - The user accepted the existing generated steering-wheel side-switch. Do not claim that it is repaired. Future generations must preserve the fixed vehicle-side cockpit layout documented in `docs/prompts/vehicle-generation-master-v5.md`.
 - Published media is illustrative. Exploded assemblies are not CAD-accurate technical documentation.
 
+`CarGallery` owns the eight-view expanding gallery in the craftsmanship section. Its source images are the approved `assets/source/images/flow-v2/red/` pack, excluding drafts. Web derivatives live in `public/assets/images/gallery/`. Preserve full-car framing in the active panel, keyboard selection, vertical phone layout and reduced-motion support. Selection must not change the section height or disturb the travelling car dock. Run `npm run test:gallery` after gallery changes.
+
 ## Vehicle facts
 
 Use the Huayra BC Coupé, not the Roadster BC or Huayra R. Specifications live in `data/carData.ts` and reviewed sources are recorded in `docs/research/huayra-bc-specifications.md`. Preserve units: 764 CV is metric horsepower, 1,218 kg is dry weight. The engine is a twin-turbo AMG V12 and the transmission is a seven-speed Xtrac automated manual. Verify new factual claims against manufacturer sources.

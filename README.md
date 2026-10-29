@@ -45,6 +45,8 @@ No API keys or environment variables are required. `demo-pagani.ibithun.com` is 
 - Reduced motion shows stills instead of the long scroll films. Failed motion requests retain a visible image and offer retry. Navigation, details and labels support keyboard interaction.
 - The technical portrait uses production Huayra BC Coupé specifications, including power, torque, Xtrac AMT, weight, drive, brakes, suspension and wheels. Source links appear on the page. The generated exploded illustration is conceptual, not an engineering disassembly manual.
 
+- The craftsmanship gallery expands eight original red-car studies into a full-colour panel beside monochrome strips. It follows the lodge gallery interaction, with red accents, a vertical phone layout and keyboard selection.
+
 ## Media organisation
 
 ```text
@@ -61,6 +63,7 @@ public/assets/studio/
   poster.webp                 Starting pose
   manifest.json               Source, frame ranges, sizes and background
 public/assets/images/         Red reference stills and social preview
+  gallery/                    Eight studies in 800px/1600px WebP sizes
 public/media/                 README animation, 720p MP4 and film poster
 app/teaser/                   Accessible film player with social metadata
 docs/prompts/                 Generation prompts and continuity instructions
@@ -79,6 +82,7 @@ Source files and backups are preserved locally. `assets/`, `exports/`, `analysis
 | `npm run build` | Production build |
 | `npm run test:visual` | Chromium/WebKit responsive interaction checks |
 | `npm run test:a11y` | axe-core WCAG A/AA scans |
+| `npm run test:gallery` | Eight-view expansion, keyboard/touch layouts and gallery accessibility |
 | `npm run test:chapters` | Chapter transitions, responsive composition and delayed-frame synchronisation |
 | `npm run prepare:sequences` | Rebuild the red desktop/mobile WebP frames |
 | `npm run generate:og` | Rebuild the red-only social image |
