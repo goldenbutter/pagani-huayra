@@ -320,3 +320,14 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
  .technical-details dd { font-size:19px; }
  .travel-copy p.spec-note { font-size:14px; }
 }
+
+/* Closing invitations and footer labels remain readable at normal zoom. */
+.finale-links .button-primary { font-size:13px; line-height:1.5; }
+.finale-links .text-link,.footer .back-top { font-size:12px; line-height:1.5; min-height:44px; }
+.footer-main > div > .eyebrow { font:600 16px/1.5 "Rajdhani",sans-serif; letter-spacing:.06em; }
+.footer-credit > span { font:600 14px/1.6 "Rajdhani",sans-serif; letter-spacing:.04em; }
+@media(max-width:767px) {
+ .finale-links .button-primary { font-size:11px; gap:16px; }
+ .finale-links .text-link,.footer .back-top { font-size:10px; }
+ .footer-main > div > .eyebrow,.footer-credit > span { font-size:14px; }
+}

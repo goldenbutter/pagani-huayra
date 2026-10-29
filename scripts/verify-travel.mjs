@@ -47,10 +47,10 @@ for (const engine of [chromium, webkit]) {
         const y = keys[from].end + (keys[to].start - keys[from].end) * t;
         const sample = await seek(y);
         assert.equal(sample.scene, 'travel');
-        if (width >= 768 && (from === 'story' || to === 'story')) {
-          const overlap = await page.evaluate(() => {
+        for (const section of ['story', 'specs']) if (width >= 768 && (from === section || to === section)) {
+          const overlap = await page.evaluate(section => {
             const canvas = document.querySelector('.travelling-car');
-            const text = document.querySelector('#story .travel-copy').getBoundingClientRect();
+            const text = document.querySelector(`#${section} .travel-copy`).getBoundingClientRect();
             const ratio = canvas.width / innerWidth;
             const x = Math.max(0, Math.floor((text.left - 20) * ratio));
             const y = Math.max(0, Math.floor(text.top * ratio));
@@ -59,8 +59,8 @@ for (const engine of [chromium, webkit]) {
             const data = canvas.getContext('2d').getImageData(x, y, canvas.width - x, bottom - y).data;
             for (let i = 3; i < data.length; i += 4) if (data[i] > 200) return true;
             return false;
-          });
-          assert(!overlap, `${name}/${from}/${to}/${t}: car enters story reading area`);
+          }, section);
+          assert(!overlap, `${name}/${from}/${to}/${t}: car enters ${section} reading area`);
         }
         assert(sample.frame <= 552, 'Travelling car must stay closed');
         sequence.push(sample.frame); samples.push(sample);

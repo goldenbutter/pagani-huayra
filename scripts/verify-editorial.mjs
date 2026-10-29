@@ -33,6 +33,21 @@ for (const engine of [chromium, webkit]) {
     await page.locator('.technical-details summary').click();
     assert(await page.locator('.technical-details').getAttribute('open') !== null);
     assert(await page.evaluate(() => document.querySelector('.technical-details').getBoundingClientRect().bottom < document.querySelector('#craftsmanship').getBoundingClientRect().top));
+    await page.locator('.finale-bottom').scrollIntoViewIfNeeded();
+    const closing = await page.locator('.finale-bottom').evaluate(e => {
+      const links = [...e.querySelectorAll('a')];
+      return links.map(a => ({ size: parseFloat(getComputedStyle(a).fontSize), clipped: a.scrollWidth > a.clientWidth + 1 }));
+    });
+    assert(closing.every(a => a.size >= (width < 768 ? 10 : 12) && !a.clipped));
+    await page.screenshot({ path: `${out}/${engine.name()}-${name}-closing.png` });
+    await page.locator('.footer').scrollIntoViewIfNeeded();
+    const footer = await page.locator('.footer').evaluate(e => ({
+      caption: parseFloat(getComputedStyle(e.querySelector('.footer-main .eyebrow')).fontSize),
+      back: parseFloat(getComputedStyle(e.querySelector('.back-top')).fontSize),
+      overflow: document.documentElement.scrollWidth > innerWidth + 1,
+    }));
+    assert(footer.caption >= 14 && footer.back >= (width < 768 ? 10 : 12) && !footer.overflow);
+    await page.screenshot({ path: `${out}/${engine.name()}-${name}-footer.png` });
     report.push({ engine: engine.name(), name, passed: true }); console.log('PASS editorial', engine.name(), name); await page.close();
   }
   await browser.close();

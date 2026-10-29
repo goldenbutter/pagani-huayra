@@ -46,6 +46,7 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
     const pc = photo.getContext("2d")!;
     const slots = [...document.querySelectorAll<HTMLElement>("[data-car-slot]")];
     const films = [...document.querySelectorAll<HTMLElement>("[data-film]")];
+    const specsCopy = document.querySelector<HTMLElement>("#specs .travel-copy");
     const status = (value: string) => window.dispatchEvent(new CustomEvent("studio-status", { detail: value }));
     const prepare = (image: CanvasImageSource, index: number) => {
       pc.clearRect(0, 0, 1280, 720); pc.globalCompositeOperation = "source-over"; pc.drawImage(image, 0, 0, 1280, 720);
@@ -89,15 +90,27 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
       // A safe resting dock alone cannot prevent a wide intermediate view clipping.
       const rotatedWidth = Math.abs(Math.cos(rotation)) * 1280 + Math.abs(Math.sin(rotation)) * 720;
       const growth = w >= 768 && b.id === "story" ? 1 - placement : 1;
-      const scale = Math.min(
+      let scale = Math.min(
         Math.min(target.w / 1280, target.h / 720) * (1 + fly * growth * (w < 768 ? 0.045 : 0.1)),
         (w - margin * 2) / rotatedWidth,
       );
-      const halfWidth = rotatedWidth * scale / 2;
-      const centerX = Math.min(w - margin - halfWidth, Math.max(margin + halfWidth, target.x));
       // On stacked phone sections, carry the car below the departing paragraph.
       const lift = w < 768 ? (a.id === "story" || a.id === "design" ? -0.22 : 0.025) : 0.065;
       const centerY = target.y - fly * h * lift;
+      let rightEdge = w - margin;
+      if (w >= 768 && specsCopy && (a.id === "specs" || b.id === "specs")) {
+        const copy = specsCopy.getBoundingClientRect();
+        const halfHeight = (Math.abs(Math.sin(rotation)) * 1280 + Math.abs(Math.cos(rotation)) * 720) * scale / 2;
+        // Stay left until the complete specification block has passed above the car.
+        // Ease the constraint outside the reading area, so it never snaps on or off.
+        const buffer = 120;
+        const clearance = smooth(clamp01((centerY + halfHeight - copy.top + buffer) / buffer))
+          * smooth(clamp01((copy.bottom - centerY + halfHeight + buffer) / buffer));
+        rightEdge = mix(rightEdge, copy.left - 28, clearance);
+        scale = Math.min(scale, (rightEdge - margin) / rotatedWidth);
+      }
+      const halfWidth = rotatedWidth * scale / 2;
+      const centerX = Math.min(rightEdge - halfWidth, Math.max(margin + halfWidth, target.x));
       const box = { x: centerX - 640 * scale, y: centerY - 360 * scale, w: 1280 * scale, h: 720 * scale };
       let desired = end ? travelFrame(keys.at(-1)!.id, keys.at(-1)!.id, 1) : travelFrame(a.id, b.id, t), blend = 0, active = "travel", p = 0;
       for (const film of films) {
