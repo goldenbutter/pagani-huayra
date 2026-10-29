@@ -84,3 +84,9 @@ Both cinematic sections now use 24–30px desktop descriptions, 22px tablet desc
 Lint, typecheck and production build passed. The chapter suite passed 16 Chromium/WebKit cases, including 1920 × 1080 monitors, 1440 × 900 laptops and 1280 × 800 compact laptops, plus the previous desktop/tablet/phone/landscape sizes. Desktop checks now assert minimum body-text size and clearance from top and bottom scene rules. The delayed-frame narrative test passed. The eight-layout scroll and six navigation/specification cases passed.
 
 After final instruction/part-label refinements, ten focused Chromium/WebKit cases checked both films, opening/return scenes, all six part selections, caption/button fit, minimum font sizes and horizontal overflow. Four whole-page axe A/AA scans passed on the final build. Monitor, compact-laptop and phone screenshots were visually reviewed. Evidence: `analysis/readability/`, `analysis/readability-chapters.log` and `analysis/readability-visual.log`. These are browser-emulated layouts, not physical-screen certification.
+
+## Gallery framing refinement: 29 October 2026
+
+All eight expanded gallery panels now use individually reviewed framing rectangles to remove excess studio space. CSS fits each complete rectangle into the available image area, including on phones. Original media and responsive WebP files are unchanged; the new framing does not affect the video sequences or gallery/section heights.
+
+Lint, typecheck and production build passed. All eight gallery Chromium/WebKit cases, the eight-layout scroll suite, six navigation cases and four whole-page axe A/AA scans passed. All eight expanded panels were visually reviewed at desktop, tablet and phone sizes, including raised doors and the separated components in the exploded view. Captures and contact sheets are in `analysis/gallery/reframed/`; check logs are `analysis/gallery/reframing-*.log`.

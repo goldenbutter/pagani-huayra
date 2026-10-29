@@ -6,7 +6,13 @@
 .gallery-panel[aria-pressed="true"] { flex:12 1 0; border-color:var(--accent); }
 .gallery-panel:focus-visible { outline:3px solid #171717; outline-offset:3px; z-index:1; }
 .gallery-panel img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; filter:grayscale(1); transition:filter .6s; pointer-events:none; }
-.gallery-panel[aria-pressed="true"] img { height:calc(100% - 85px); object-fit:contain; filter:grayscale(0); }
+/* A separate crop for each view removes studio margins without cutting the car.
+   Size containment fits the complete crop into both wide and portrait panels. */
+.gallery-image-window { position:absolute; inset:0; display:grid; place-items:center; container-type:size; overflow:hidden; }
+.gallery-image-crop { position:relative; display:block; width:100%; height:100%; overflow:hidden; }
+.gallery-panel[aria-pressed="true"] .gallery-image-window { bottom:85px; }
+.gallery-panel[aria-pressed="true"] .gallery-image-crop { width:min(100cqw,calc(100cqh * var(--crop-ratio))); height:min(100cqh,calc(100cqw / var(--crop-ratio))); }
+.gallery-panel[aria-pressed="true"] img { width:var(--image-width); max-width:none; height:auto; left:var(--image-left); top:var(--image-top); filter:grayscale(0); }
 .gallery-shade { position:absolute; inset:0; background:linear-gradient(transparent 50%,rgba(14,14,15,.4) 75%,#111 100%); pointer-events:none; }
 .gallery-panel[aria-pressed="true"] .gallery-shade { background:linear-gradient(transparent calc(100% - 120px),#141414 calc(100% - 70px)); }
 .gallery-caption { position:absolute; left:0; right:0; bottom:23px; display:flex; align-items:center; gap:15px; padding:0 12px; color:white; pointer-events:none; }
@@ -32,7 +38,7 @@
  .gallery-panel { flex:0 0 54px; min-width:0; width:100%; }
  .gallery-panel[aria-pressed="true"] { flex:0 0 300px; }
  .gallery-panel img { object-position:center 48%; }
- .gallery-panel[aria-pressed="true"] img { height:calc(100% - 84px); }
+ .gallery-panel[aria-pressed="true"] .gallery-image-window { bottom:84px; }
  .gallery-shade { background:rgba(0,0,0,.7); }
  .gallery-caption { bottom:10px; padding:0 12px; gap:12px; }
  .gallery-caption-copy { opacity:1; transform:none; white-space:normal; }
