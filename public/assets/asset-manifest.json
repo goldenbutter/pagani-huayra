@@ -1,0 +1,8 @@
+{
+  "edition": "Rosso",
+  "studio": "/assets/studio/manifest.json",
+  "originalMedia": "assets/source",
+  "approvedEdits": "exports/kling4/v3-two-stage",
+  "inactiveMedia": "assets/archive/three-color-site",
+  "background": "#fbfbfb"
+}

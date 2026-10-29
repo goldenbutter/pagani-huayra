@@ -1,0 +1,23 @@
+{
+  "quoteCredits": 11.25,
+  "model": "Kling 4.0",
+  "params": {
+    "model": "kling4_0",
+    "mode": "image-to-video",
+    "resolution": "720p",
+    "duration": 5,
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "prompt": "One continuous five-second drone-style orbit of this stationary red Pagani Huayra BC. Connect the supplied FRONT-LEFT three-quarter first frame to the REAR-LEFT three-quarter last frame by moving the CAMERA around the same visible left flank, approximately one quarter of a circle. Show the left SIDE PROFILE clearly in the middle. Keep the car fixed in the studio; its wheels never roll or turn. Every intermediate viewpoint is formed by real continuous perspective and parallax, not a transition between pictures. Remain at a modest, steady camera elevation; gently widen the physical camera distance only as needed to meet the last frame. One fixed lens, no zoom. Ease into movement during the first 0.25 seconds, orbit smoothly, ease to rest and hold the final 0.35 seconds. All doors and engine covers remain CLOSED. Preserve this exact red/carbon body, gunmetal wheels, red stripe edged blue and blue 20 on the ORIGINAL front-side panel. Natural occlusion is required as the rear comes into view. Keep the whole projected car inside generous white margins. Same white infinity studio, fixed softbox lighting and continuous floor reflections. No cuts, dissolves, ghosted views, morphing, mirrored car, panel opening, sliding decals or viewpoint jumps. Silent automotive studio film.",
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "8179eea3-175c-4735-88ba-ead1cedfea56"
+      },
+      {
+        "role": "end_image",
+        "value": "4d4a079e-f20d-4bc6-bc3f-a9eaeca1a76e"
+      }
+    ]
+  }
+}

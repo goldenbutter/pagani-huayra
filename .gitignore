@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+.vercel/
+.env*
+!.env.example
+*.tsbuildinfo
+.DS_Store
+analysis/
+docs/review/
+__pycache__/
+
+# Local media-production library and provider receipts, preserved on disk
+/assets/
+/exports/
+/docs/prompts/kling4/red/render-ledger.json
+*.log
+.venv/
+.vercel

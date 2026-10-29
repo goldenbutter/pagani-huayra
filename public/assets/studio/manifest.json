@@ -1,0 +1,34 @@
+{
+  "source": "exports/kling4/pagani-red-continuous-orbit-exploded-720p.mp4",
+  "frames": 913,
+  "fps": 24,
+  "firstStage": {
+    "forward": [
+      0,
+      792
+    ],
+    "reverse": true
+  },
+  "secondStage": {
+    "forward": [
+      [
+        0,
+        120
+      ],
+      [
+        673,
+        912
+      ]
+    ],
+    "reverse": true
+  },
+  "background": "#fbfbfb",
+  "variants": {
+    "desktop": {
+      "bytes": 36301840
+    },
+    "mobile": {
+      "bytes": 18637918
+    }
+  }
+}

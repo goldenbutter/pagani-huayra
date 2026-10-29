@@ -1,0 +1,13 @@
+Create ONE continuous eight-second photorealistic studio shot connecting the supplied first and last frames. First frame: the red Pagani Huayra BC in a wide front-left three-quarter view. Last frame: the same closed car from the right-side profile, nose pointing screen-right. The car stays stationary; the camera moves.
+
+0.0–0.5 seconds: hold the starting view.
+0.5–3.0: orbit smoothly along the car's left flank through its left profile.
+3.0–5.5: continue around the rear, showing the actual rear perspective between the two sides.
+5.5–7.5: continue to the right-side profile and ease to a stop in the supplied last-frame composition.
+7.5–8.0: hold still.
+
+Show every intermediate viewpoint through continuous parallax. Travel around the rear, not across the front to take a shortcut. Vehicle-left and vehicle-right mean the car's own sides when facing forward from inside its cabin. All doors, hood and engine clamshell stay CLOSED throughout. Wheels do not roll or steer. Camera stays at a consistent modest elevation with one fixed focal length. Maintain generous white margins and keep the complete projected silhouette inside the frame. Natural occlusion is correct: the headlights disappear behind the car when viewed from the rear. Minor physical distance adjustment is allowed only as a slow continuous move to maintain wide framing.
+
+Preserve this same car, red paint, black carbon, red center stripe edged electric blue, gunmetal wheels, red calipers, and blue 20 on the original panel behind each front wheel. Do not move the number to the rear fender. Maintain the same seamless white studio, neutral softbox lighting and natural reflections.
+
+No cuts, dissolves, overlapping viewpoints, photograph morphs, mirrored text, geometry changes, rotating car, cropped bodywork, lens changes, sudden camera jumps or added labels. Silent studio presentation; no music, speech or dramatic sound effects. 16:9, 720p, eight seconds.

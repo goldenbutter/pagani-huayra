@@ -1,0 +1,30 @@
+{
+  "base": "Use case: product-mockup. Create one photorealistic ultra-detailed automotive commercial studio photograph of a Pagani Huayra BC hypercar. Landscape image exactly 16:9 aspect ratio. Single car, entire vehicle uncropped, centered perfectly, front-dominant slightly elevated three-quarter front angle, enough side showing to read the number on the front quarter panel. Immaculate all-white infinity cove showroom, seamless white walls and white polished floor blending together. Massive carbon front splitter, aggressive aerodynamic canards, quad circular headlights with razor-sharp LED DRL signatures, open carbon fiber hood vents, deep-dish multi-spoke gunmetal forged wheels, visible brake calipers, enormous rear wing with swan-neck mounts barely visible behind. Large octagonal overhead softbox key light with clean highlights, soft fill on both sides, realistic catchlights and subtle floor reflections. Phase One IQ4 150MP medium-format photographic look, 70mm lens, f/8, ISO 100. Visible fine carbon weave, microscopic metallic paint flake under clearcoat, rubber tire sidewall texture, finely machined wheel spokes, interior stitching visible through windshield. Realistic materials and camera rendering, no illustration, no captions, no watermark, no collage. Preserve correct believable Pagani proportions and wheel geometry. ",
+  "palettes": [
+    {
+      "slug": "red-carbon-blue",
+      "label": "Bright red / exposed carbon / electric blue",
+      "palette": "BRIGHT RED painted body with extensive exposed black carbon fiber. Bold red and electric-blue racing stripes longitudinally across hood and roof, visibly separated against exposed carbon panels. Number \"20\" in electric blue on visible front quarter panel. Red brake calipers. Paint flake under transparent clearcoat on RED painted panels; body must be predominantly bright red."
+    },
+    {
+      "slug": "pearl-white-carbon",
+      "label": "Pearl white / exposed carbon / red and blue",
+      "palette": "PEARL WHITE painted body with extensive exposed black carbon fiber. Bold red and electric-blue racing stripes longitudinally across hood and roof. Number \"20\" in electric blue on visible front quarter panel. Red brake calipers. Fine pearlescent paint flake under the clearcoat."
+    },
+    {
+      "slug": "emerald-carbon-gold",
+      "label": "Emerald green / exposed carbon / champagne gold",
+      "palette": "Rich metallic EMERALD GREEN painted body with extensive exposed black carbon fiber. Bold champagne-gold and dark green racing stripes longitudinally across hood and roof. Number \"20\" in champagne gold on visible front quarter panel. Gold brake calipers. Fine emerald metallic paint flake under the clearcoat."
+    }
+  ],
+  "editPrompts": [
+    null,
+    "Use case: precise-object-edit. Create a color variant of this exact Pagani Huayra BC studio photograph. Preserve identical car design, all geometry, framing, camera, pose, wheels, carbon weave, white infinity cove and lighting, polished floor and reflections. Change only paint, stripe colors, number color, brake-caliper color and their reflected colors. PEARL WHITE painted body with extensive exposed black carbon fiber. Bold red and electric-blue racing stripes longitudinally across hood and roof. Number \"20\" in electric blue on visible front quarter panel. Red brake calipers. Fine pearlescent paint flake under the clearcoat. Keep exact text \"20\" legible in the existing location. Single photograph, no collage or captions. Landscape 16:9 aspect ratio.",
+    "Use case: precise-object-edit. Create a color variant of this exact Pagani Huayra BC studio photograph. Preserve identical car design, all geometry, framing, camera, pose, wheels, carbon weave, white infinity cove and lighting, polished floor and reflections. Change only paint, stripe colors, number color, brake-caliper color and their reflected colors. Rich metallic EMERALD GREEN painted body with extensive exposed black carbon fiber. Bold champagne-gold and dark green racing stripes longitudinally across hood and roof. Number \"20\" in champagne gold on visible front quarter panel. Gold brake calipers. Fine emerald metallic paint flake under the clearcoat. Keep exact text \"20\" legible in the existing location. Single photograph, no collage or captions. Landscape 16:9 aspect ratio."
+  ],
+  "sources": [
+    "exec-0f051cca-5ff8-4ee1-a9bc-a7c69f5064ac.png",
+    "exec-cb4f415e-517d-4552-bb03-2691cd6faec2.png",
+    "exec-02642e52-7ca1-4ce8-9ba5-a9f3037067cb.png"
+  ]
+}
