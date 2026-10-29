@@ -1,10 +1,12 @@
 # Deployment
 
 - Repository: https://github.com/goldenbutter/pagani-huayra
-- Production branch: `main`
+- Production branch: `main`, connected to Vercel for automatic deployments
 - Vercel project: [iBithun / pagani-huayra](https://vercel.com/i-bithun/pagani-huayra)
 - Project ID: `prj_GpOyG3dqjv5Dcd0qny200YC33FZ0`
 - Team: `i-bithun`, ID `team_7PO0DgvFHgmRNHAdz1p5Q4Rq`
+- Live production mirror: https://pagani-huayra-ochre.vercel.app
+- Live film player: https://pagani-huayra-ochre.vercel.app/teaser
 - Canonical hostname: https://demo-pagani.ibithun.com
 - Film player: `/teaser`
 - Framework: Next.js App Router
@@ -12,6 +14,8 @@
 - Install: `npm ci`
 - Build: `npm run build`
 - Application secrets: none required
+
+The production site is publicly reachable on its Vercel mirror. The custom hostname remains pending the records below. The Vercel connector required reauthentication, so publication used the already authenticated Vercel CLI 65.5.0, verified as the latest stable version at release.
 
 ## External DNS at Hostinger
 

@@ -49,4 +49,13 @@ Run `npm run test:visual` and `npm run test:a11y` with the production preview ru
 
 The existing AI footage still has accepted interior/geometric drift, including the steering-wheel issue identified by the user. The site does not correct or validate generated mechanics. Source lighting and reflections can vary within the film; matching the surface and feathering its border do not relight the source. The film is 720p. No generation credits were spent on this website update.
 
-Originals and inactive colours are preserved outside the public site. No GitHub push, public deployment, domain configuration or physical-device certification was performed.
+Originals and inactive colours are preserved outside the public site. The initial local-build review did not publish the site. The subsequent publication checks are recorded below; physical-device certification remains unperformed.
+
+
+## Publication update: 29 October 2026
+
+The public `goldenbutter/pagani-huayra` repository and iBithun Vercel project are configured. The root Analytics integration, canonical domain, film player and README assets passed lint, typecheck and production build.
+
+`node scripts/verify-release.mjs` passed locally in Chromium and WebKit at 1440 × 1000 and 390 × 844. It verified the 18.77-second video's duration and real playback, homepage/teaser metadata, horizontal fit, zero player axe violations, the homepage exploded frame and absence of page errors. A production run uses the public Vercel mirror. Evidence is in ignored `analysis/release/` and `analysis/release-production.log`.
+
+Custom-domain HTTPS and analytics collection require separate verification after the user adds Hostinger records and enables Web Analytics. Their configuration and current status are in `DEPLOYMENT.md`.

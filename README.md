@@ -2,15 +2,17 @@
 
 An independent automotive portfolio concept by [iBithun](https://portfolio.ibithun.com). One red Huayra travels through an editorial website, with two scroll-controlled films and an annotated exploded study. This is not a dealership or an official Pagani website. Inquiries go to iBithun about website projects.
 
-**[Explore the website](https://demo-pagani.ibithun.com)** · **[Watch the film](https://demo-pagani.ibithun.com/teaser)** · **[Work with iBithun](https://portfolio.ibithun.com)**
+**[Explore the website](https://pagani-huayra-ochre.vercel.app)** · **[Watch the film](https://pagani-huayra-ochre.vercel.app/teaser)** · **[Work with iBithun](https://portfolio.ibithun.com)**
+
+The custom hostname **demo-pagani.ibithun.com** is attached in Vercel and awaits Hostinger DNS verification. The live links above work now.
 
 ## Cinematic preview
 
-[![Red Huayra BC opening, exploded view and reassembly. Click to watch the film.](public/media/pagani-anatomy-preview.gif)](https://demo-pagani.ibithun.com/teaser)
+[![Red Huayra BC opening, exploded view and reassembly. Click to watch the film.](public/media/pagani-anatomy-preview.gif)](https://pagani-huayra-ochre.vercel.app/teaser)
 
 This silent 19-second film is the approved short orbit, opening, explosion and return sequence used by the website. It is a product-film preview, not a recording of the entire website. Click the animated image for the 720p player with playback controls, seeking, fullscreen and download.
 
-[Video in this repository](public/media/pagani-anatomy-19s.mp4) · [Download the MP4](https://demo-pagani.ibithun.com/media/pagani-anatomy-19s.mp4)
+[Video in this repository](public/media/pagani-anatomy-19s.mp4) · [Download the MP4](https://pagani-huayra-ochre.vercel.app/media/pagani-anatomy-19s.mp4)
 
 ## Run locally
 
@@ -79,6 +81,8 @@ Source files and backups are preserved locally. `assets/`, `exports/`, `analysis
 | `npm run test:a11y` | axe-core WCAG A/AA scans |
 | `npm run prepare:sequences` | Rebuild the red desktop/mobile WebP frames |
 | `npm run generate:og` | Rebuild the red-only social image |
+| `python3 scripts/prepare-teaser.py` | Rebuild the animated README preview from the accepted MP4 |
+| `node scripts/verify-release.mjs` | Check the player, playback, metadata and homepage on Chromium/WebKit |
 
 Tests default to http://localhost:3002. Override with `BASE_URL`. Frame preparation requires Python, Pillow and ffmpeg; it does not use paid generation credits. Browser tests require Playwright Chromium and WebKit. See [TESTING.md](TESTING.md) for evidence and limitations.
 
