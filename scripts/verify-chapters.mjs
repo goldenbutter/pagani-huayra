@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 const base=process.env.BASE_URL||'http://localhost:3002';const out='analysis/chapters';await fs.mkdir(out,{recursive:true});const report=[];
 for(const engine of [chromium,webkit]){
  const browser=await engine.launch();
- for(const [name,width,height] of [['desktop',1440,1000],['tablet',834,1194],['phone',390,844],['small-phone',360,740],['landscape',844,390]]){
+ for(const [name,width,height] of [['monitor',1920,1080],['laptop',1440,900],['compact-laptop',1280,800],['desktop',1440,1000],['tablet',834,1194],['phone',390,844],['small-phone',360,740],['landscape',844,390]]){
   const page=await browser.newPage({viewport:{width,height}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base,{waitUntil:'networkidle'});await page.waitForFunction(()=>document.documentElement.dataset.studioReady==='true');
   const seek=async(id,p)=>{await page.locator('#'+id).evaluate((e,p)=>window.scrollTo(0,e.offsetTop+(e.offsetHeight-innerHeight)*p),p);};
@@ -13,8 +13,8 @@ for(const engine of [chromium,webkit]){
    await page.waitForFunction(([f,key])=>Math.abs(Number(document.querySelector('.travelling-car').dataset.frame)-f)<=1&&document.querySelector('#experience .film-narrative').dataset.story===key,[frame,story]);
    await page.waitForTimeout(550);
    await page.screenshot({path:`${out}/${engine.name()}-${name}-${story}.png`});
-   const geometry=await page.locator('#experience').evaluate(e=>{const panel=e.querySelector('.film-narrative').getBoundingClientRect(),dock=e.querySelector('.car-dock').getBoundingClientRect();return {overflow:document.documentElement.scrollWidth>innerWidth,panelRight:panel.right,dockLeft:dock.left,clipped:[...e.querySelectorAll('h2,.film-key-fact strong')].some(n=>n.scrollWidth>n.clientWidth+1)};});
-   assert(!geometry.overflow,'Horizontal overflow');assert(!geometry.clipped,`Clipped text: ${name}/${story}`);if(width>=768)assert(geometry.panelRight<geometry.dockLeft+1,'Text and car columns overlap');
+   const geometry=await page.locator('#experience').evaluate(e=>{const panel=e.querySelector('.film-narrative').getBoundingClientRect(),dock=e.querySelector('.car-dock').getBoundingClientRect();return {overflow:document.documentElement.scrollWidth>innerWidth,panelRight:panel.right,dockLeft:dock.left,panelTop:panel.top,panelBottom:panel.bottom,toplineBottom:e.querySelector('.film-topline').getBoundingClientRect().bottom,bottomlineTop:e.querySelector('.film-bottomline').getBoundingClientRect().top,bodySize:parseFloat(getComputedStyle(e.querySelector('.film-story-description p')).fontSize),clipped:[...e.querySelectorAll('h2,.film-key-fact strong')].some(n=>n.scrollWidth>n.clientWidth+1)};});
+   assert(!geometry.overflow,'Horizontal overflow');if(width>1100){assert(geometry.bodySize>=24,'Desktop narrative must be readable');assert(geometry.panelTop>geometry.toplineBottom,`Narrative hits top line: ${name}/${story}`);assert(geometry.panelBottom<geometry.bottomlineTop,`Narrative hits bottom line: ${name}/${story}`);}assert(!geometry.clipped,`Clipped text: ${name}/${story}`);if(width>=768)assert(geometry.panelRight<geometry.dockLeft+1,'Text and car columns overlap');
   }
   await seek('experience',.8);await page.waitForFunction(()=>document.querySelector('#experience .film-narrative').dataset.story==='return');
   // Reverse scrolling restores the earlier chapter, not a timer-driven next slide.
