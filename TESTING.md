@@ -129,3 +129,7 @@ Lint, typecheck and production build passed. Twelve Chromium/WebKit travel cases
 The original live homepage returned OG tags in its initial head and a valid 92,775-byte JPEG to Facebook, LinkedIn and X crawler-style requests. A WhatsApp-style request also followed the HTTP-to-HTTPS redirect successfully. This did not reproduce the user's missing preview inside WhatsApp.
 
 The update adds explicit secure image URL, JPEG type, site name, locale and Twitter alt text on the homepage and teaser, using a fresh image URL while preserving the original artwork. Lint, typecheck and production build passed. Both prerendered HTML heads were checked for the complete metadata and consistent image URLs; the JPEG decoded at 1200 × 630. Actual WhatsApp rendering remains a separate user-side confirmation.
+
+## Social card background blend
+
+The OG generator previously feathered only the top and bottom of the photograph, leaving visible vertical edges against the card background. It now intersects horizontal and vertical CSS masks before capturing the card. The source car photograph and earlier social JPEGs are preserved. The new `pagani-og-v3.jpg` was visually reviewed at 1200 × 630: the hard rectangular boundary is removed and the full car remains visible.

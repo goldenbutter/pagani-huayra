@@ -56,6 +56,6 @@ Chromium and WebKit passed the live player/homepage checks on desktop and phone:
 
 ## Social previews
 
-The original 1200 × 630 JPEG and OG tags were present before custom-domain activation. A reported WhatsApp preview failure remains distinct from successful HTTP crawler checks; earlier DNS failure is a possible cause, not a proven diagnosis. Both the homepage and teaser now declare image MIME type, secure URL, site name, locale and explicit Twitter image alt text. They share `/media/pagani-og-v2.jpg`, a fresh URL for the existing artwork. The original image remains available.
+The original 1200 × 630 JPEG and OG tags were present before custom-domain activation. A reported WhatsApp preview failure remains distinct from successful HTTP crawler checks; earlier DNS failure is a possible cause, not a proven diagnosis. Both the homepage and teaser now declare image MIME type, secure URL, site name, locale and explicit Twitter image alt text. They share `/media/pagani-og-v3.jpg`, with the original photograph feathered into the card background along all four edges. The original image remains available.
 
 Share the HTTPS URL directly. Validate actual previews in each target app after domain activation; a successful crawler-style HTTP request is not an in-app preview test. WhatsApp may also suppress previews through its optional Disable link previews setting. Do not claim that an image URL change forces every app to refresh cached page metadata.
