@@ -109,3 +109,10 @@ The travelling car now fits its full rotated frame inside horizontal viewport ma
 Lint, typecheck and production build passed. The expanded travel suite passed twelve Chromium/WebKit cases at 1920 × 1080, 1864 × 1010, 1440 × 1000, 1280 × 800, 390 × 844 and 360 × 740. It samples five positions through each of seven handoffs, independently checks canvas edge alpha and rotated frame bounds, and verifies reverse motion and both film boundaries.
 
 `npm run test:editorial` passed twelve Chromium/WebKit monitor, laptop, compact laptop, tablet, phone and small-phone cases. It checks minimum type sizes, text overflow, footer clearance and expanded engineering details. The existing eight-layout scroll suite, six navigation/specification cases and four axe A/AA scans passed. Monitor and phone screenshots were reviewed. Evidence: `analysis/editorial/`, `analysis/travel/bounds-checks.log`, `analysis/editorial-visual.log` and `analysis/editorial-a11y.log`. These checks use browser emulation; physical-device testing remains unperformed.
+
+
+## Story text clearance: 29 October 2026
+
+The desktop story car now occupies a narrower left column. Its arrival reaches that column early and sheds the temporary flight enlargement before the story text enters the same vertical area. The larger typography is preserved.
+
+Lint, typecheck and production build passed. All twelve Chromium/WebKit travel cases passed with eight samples per handoff, reverse-scroll checks and a new canvas-alpha assertion that reserves a 20px gap before the story reading area. The test now waits for animation frames after scrolling before comparing loaded frame targets. The eight-layout visual suite, six navigation cases and four axe scans passed on the final build. Focused pixel-clearance checks also passed at 1920, 1750, 1440, 1280 and 834px widths, including the resting story pose. Desktop screenshots were reviewed. Evidence: `analysis/story-travel.log`, `analysis/story-clearance.log`, `analysis/story-visual-final.log`, `analysis/story-a11y-final.log` and `analysis/editorial/story-trial-*.png`.

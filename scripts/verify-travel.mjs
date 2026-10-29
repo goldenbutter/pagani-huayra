@@ -21,8 +21,11 @@ for (const engine of [chromium, webkit]) {
       return result;
     });
     const seek = async (y) => {
-      await page.evaluate(y => scrollTo(0, y), y);
-      await page.waitForTimeout(50);
+      await page.evaluate(async y => {
+        scrollTo(0, y);
+        // Wait for the scroll event and renderer before comparing frame targets.
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      }, y);
       await page.waitForFunction(() => { const c = document.querySelector('.travelling-car'); return c.dataset.frame === c.dataset.targetFrame; });
       const sample = await page.locator('.travelling-car').evaluate(e => {
         const c = e.getContext('2d'), strip = Math.max(1, Math.floor(e.width / innerWidth * 8));
@@ -40,17 +43,32 @@ for (const engine of [chromium, webkit]) {
     const samples = [];
     for (const [from, to] of [['hero', 'explore'], ['explore', 'story'], ['story', 'design'], ['design', 'anatomy'], ['anatomy', 'specs'], ['specs', 'craft'], ['craft', 'finale']]) {
       const sequence = [];
-      for (const t of [.02, .15, .5, .85, .98]) {
+      for (const t of [.02, .15, .5, .65, .7, .75, .85, .98]) {
         const y = keys[from].end + (keys[to].start - keys[from].end) * t;
         const sample = await seek(y);
         assert.equal(sample.scene, 'travel');
+        if (width >= 768 && (from === 'story' || to === 'story')) {
+          const overlap = await page.evaluate(() => {
+            const canvas = document.querySelector('.travelling-car');
+            const text = document.querySelector('#story .travel-copy').getBoundingClientRect();
+            const ratio = canvas.width / innerWidth;
+            const x = Math.max(0, Math.floor((text.left - 20) * ratio));
+            const y = Math.max(0, Math.floor(text.top * ratio));
+            const bottom = Math.min(canvas.height, Math.ceil(text.bottom * ratio));
+            if (bottom <= y) return false;
+            const data = canvas.getContext('2d').getImageData(x, y, canvas.width - x, bottom - y).data;
+            for (let i = 3; i < data.length; i += 4) if (data[i] > 200) return true;
+            return false;
+          });
+          assert(!overlap, `${name}/${from}/${to}/${t}: car enters story reading area`);
+        }
         assert(sample.frame <= 552, 'Travelling car must stay closed');
         sequence.push(sample.frame); samples.push(sample);
         if (t === .5) await page.screenshot({ path: `${out}/${engine.name()}-${name}-${from}-${to}.png` });
       }
       assert(new Set(sequence).size > 1, `${from}/${to} must change viewpoint`);
       const reverse = await seek(keys[from].end + (keys[to].start - keys[from].end) * .5);
-      assert.equal(reverse.frame, sequence[2], 'Reverse scrolling must restore the same view');
+      assert.equal(reverse.frame, sequence[2], `${name}/${from}/${to}: reverse scrolling must restore the same view`);
     }
     for (const id of ['explore', 'anatomy']) {
       const start = await seek(keys[id].start + 1), end = await seek(keys[id].end - 1);

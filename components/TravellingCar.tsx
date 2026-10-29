@@ -80,14 +80,17 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
       const t = clamp01((scrollY - a.at) / Math.max(1, b.at - a.at)), eased = smooth(t);
       const end = scrollY >= keys.at(-1)!.at;
       const fly = a.id === b.id || end ? 0 : Math.sin(t * Math.PI);
-      const target = end ? keys.at(-1)! : { x: mix(a.x, b.x, eased), y: mix(a.y, b.y, eased), w: mix(a.w, b.w, eased), h: mix(a.h, b.h, eased) };
+      // Reach the left column before the story copy rises into the car's path.
+      const placement = w >= 768 && b.id === "story" ? smooth(clamp01(t / .6)) : eased;
+      const target = end ? keys.at(-1)! : { x: mix(a.x, b.x, placement), y: mix(a.y, b.y, eased), w: mix(a.w, b.w, placement), h: mix(a.h, b.h, placement) };
       const rotation = fly * (b.x >= a.x ? -1 : 1) * (w < 768 ? 0.025 : 0.065);
       const margin = Math.min(32, Math.max(12, w * .017));
       // Fit the whole rotated photograph, including the extra scale in flight.
       // A safe resting dock alone cannot prevent a wide intermediate view clipping.
       const rotatedWidth = Math.abs(Math.cos(rotation)) * 1280 + Math.abs(Math.sin(rotation)) * 720;
+      const growth = w >= 768 && b.id === "story" ? 1 - placement : 1;
       const scale = Math.min(
-        Math.min(target.w / 1280, target.h / 720) * (1 + fly * (w < 768 ? 0.045 : 0.1)),
+        Math.min(target.w / 1280, target.h / 720) * (1 + fly * growth * (w < 768 ? 0.045 : 0.1)),
         (w - margin * 2) / rotatedWidth,
       );
       const halfWidth = rotatedWidth * scale / 2;

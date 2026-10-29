@@ -59,6 +59,7 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
 .travel-copy p { max-width:390px; font-size:22px; line-height:1.6; color:var(--muted); }
 .signature { display:block; font:italic 27px Georgia,serif; color:#777; margin-top:36px; }
 .travel-section .car-dock { width:65%; height:64%; top:18%; left:-5%; }
+@media(min-width:768px) { .story-travel .car-dock { left:-2%; width:56%; } }
 .design-travel .car-dock { left:41%; width:58%; top:24%; }
 .travel-bottom { position:absolute; left:var(--gutter); right:var(--gutter); bottom:35px; display:flex; justify-content:space-between; z-index:4; font-size:7px; color:var(--muted); }
 .material-inline { display:flex; align-items:center; gap:26px; margin-top:36px; }
