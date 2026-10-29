@@ -14,7 +14,8 @@
     "test:a11y": "node scripts/check-accessibility.mjs",
     "test:exploded": "node scripts/verify-studio.mjs",
     "test:chapters": "node scripts/verify-chapters.mjs && node scripts/verify-chapter-loading.mjs",
-    "test:gallery": "node scripts/verify-gallery.mjs"
+    "test:gallery": "node scripts/verify-gallery.mjs",
+    "test:travel": "node scripts/verify-travel.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

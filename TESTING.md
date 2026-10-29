@@ -90,3 +90,13 @@ After final instruction/part-label refinements, ten focused Chromium/WebKit case
 All eight expanded gallery panels now use individually reviewed framing rectangles to remove excess studio space. CSS fits each complete rectangle into the available image area, including on phones. Original media and responsive WebP files are unchanged; the new framing does not affect the video sequences or gallery/section heights.
 
 Lint, typecheck and production build passed. All eight gallery Chromium/WebKit cases, the eight-layout scroll suite, six navigation cases and four whole-page axe A/AA scans passed. All eight expanded panels were visually reviewed at desktop, tablet and phone sizes, including raised doors and the separated components in the exploded view. Captures and contact sheets are in `analysis/gallery/reframed/`; check logs are `analysis/gallery/reframing-*.log`.
+
+## Perspective-changing car handoffs: 29 October 2026
+
+Travelling scenes now use changing closed-car views from the accepted orbit, instead of translating the same front-view photograph. The route turns through side and rear angles, rises toward the roof, and returns to the original front pose at both film boundaries and the finale. Lift, bank and a separate ground shadow support the depth effect. It remains a photographic sequence rather than an interactive CAD model. Phone departures from the story/design scenes pass below their paragraphs.
+
+A reusable 512 × 288 alpha matte isolates each view; its cache is bounded to 36 masks. Existing compressed/decoded frame caches supply the photographs. Original assets and approved film ranges are unchanged; no generation credits were used.
+
+Lint, typecheck and production builds passed. `npm run test:travel` passed six Chromium/WebKit desktop, laptop and phone cases: all seven handoffs change perspective, reverse scrolling restores the matching view, travelling frames remain closed, both films meet frame zero, travel backgrounds are transparent, and no page errors or horizontal overflow occur. The final phone path was included in a second successful run. Sixteen chapter cases and delayed-frame sync, eight existing scroll cases, six navigation/specification cases and four axe A/AA scans also passed. A final layer-order refinement kept copy/gallery above the car; dock captures and phone/gallery controls were checked on that build.
+
+Three recorded 3.5-second desktop scroll passes had median frame intervals of 16.7 ms and p95 of 16.7–16.8 ms locally. This is a local browser sample, not a physical-phone or slow-network performance claim. Evidence and recordings are in `analysis/travel/`; physical-device testing remains unperformed.

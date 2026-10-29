@@ -7,6 +7,7 @@ body { overflow-x:clip; }
 .navbar { z-index:70; }
 .navbar .brand-emblem { font-size:34px; }
 .travelling-car { position:fixed; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; }
+.travelling-car[data-scene="travel"] { z-index:3; }
 .car-dock { position:absolute; pointer-events:none; }
 .dock-fallback { width:100%; height:100%; object-fit:contain; mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); }
 html[data-studio-ready="true"] .dock-fallback { opacity:0; }
@@ -48,7 +49,7 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
 .studio-recovery { position:absolute; z-index:7; left:var(--gutter); right:var(--gutter); bottom:90px; padding:14px 20px; background:#fbfbfbf5; border:1px solid var(--line); font-size:16px; display:flex; gap:20px; justify-content:space-between; }
 .studio-recovery button { text-decoration:underline; color:var(--accent); }
 .travel-section { min-height:940px; height:110svh; position:relative; padding:65px var(--gutter); border-top:1px solid var(--line); scroll-margin-top:78px; }
-.travel-section .section-label,.craft-studio .section-label { position:relative; z-index:4; font-size:7px; }
+.travel-section .section-label,.craft-studio .section-label { position:relative; z-index:1; font-size:7px; }
 .travel-copy { position:absolute; top:29%; width:40%; z-index:4; }
 .travel-copy.right { left:55%; padding-right:var(--gutter); }
 .travel-copy.left { left:var(--gutter); }
@@ -58,7 +59,7 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
 .travel-copy p { max-width:390px; font-size:22px; line-height:1.6; color:var(--muted); }
 .signature { display:block; font:italic 27px Georgia,serif; color:#777; margin-top:36px; }
 .travel-section .car-dock { width:65%; height:64%; top:18%; left:-5%; }
-.design-travel .car-dock { left:40%; width:66%; top:24%; }
+.design-travel .car-dock { left:41%; width:58%; top:24%; }
 .travel-bottom { position:absolute; left:var(--gutter); right:var(--gutter); bottom:35px; display:flex; justify-content:space-between; z-index:4; font-size:7px; color:var(--muted); }
 .material-inline { display:flex; align-items:center; gap:26px; margin-top:36px; }
 .material-inline strong { font:76px "Orbitron Variable",sans-serif; letter-spacing:-.08em; }
@@ -133,7 +134,7 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
  .travel-copy h2{font-size:clamp(29px,8.2vw,44px);margin:16px 0 18px}
  .travel-copy p{font-size:18px;line-height:1.5;max-width:90%}.travel-copy .eyebrow{font-size:6px}
  .signature{font-size:23px;margin-top:24px}
- .travel-section .car-dock,.design-travel .car-dock{left:-5%;width:110%;top:9%;height:36%}
+ .travel-section .car-dock,.design-travel .car-dock{left:0;width:100%;top:9%;height:36%}
  .travel-bottom{left:23px;right:23px;bottom:25px;font-size:5px;gap:20px}
  .material-inline{margin-top:20px;gap:25px}.material-inline strong{font-size:58px}.material-inline strong span{font-size:24px}.material-inline>.eyebrow{font-size:5px}
  .specs-travel{height:auto;min-height:1100px}.specs-travel .travel-copy{top:40%;}.specs-travel .car-dock{top:7%;height:31%}.specs-travel .travel-copy h2{font-size:30px}
@@ -182,7 +183,7 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
 }
 .studio-pin { overflow:clip; }
 .signature { color:#707070; }
-@media(min-width:768px) { .specs-travel .car-dock { width:57%; left:-6%; } }
+@media(min-width:768px) { .specs-travel .car-dock { width:53%; left:0; } }
 @media(min-width:768px) { .specs-travel .car-dock { top:200px; height:600px; } }
 
 /* Scroll chapters: a reading column on the left, a continuous film on the right. */

@@ -33,7 +33,7 @@ for(const [engine,cases] of [[chromium,[['desktop',1440,1000],['laptop',1280,800
   const travel=[];
   for(const id of ['story','design']){
    await p.locator(`#${id} [data-car-slot]`).evaluate(e=>window.scrollTo(0,e.getBoundingClientRect().top+scrollY+e.offsetHeight/2-innerHeight/2));
-   await frame(p,0);await p.waitForTimeout(160);await noOverflow(p);
+   await p.waitForFunction(()=>{const c=document.querySelector(".travelling-car");return c.dataset.frame===c.dataset.targetFrame&&Number(c.dataset.frame)<=552;});await p.waitForTimeout(160);await noOverflow(p);
    travel.push(await p.locator('.travelling-car').getAttribute('data-x'));
    await p.screenshot({path:`${out}/${name}-${id}.png`});
   }

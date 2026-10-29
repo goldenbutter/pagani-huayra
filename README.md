@@ -36,11 +36,11 @@ No API keys or environment variables are required. `demo-pagani.ibithun.com` is 
 
 ## The experience
 
-- One persistent canvas follows layout docks, with gentle lift and tilt between sections, following the ENERGITIX product-scene approach.
+- One persistent canvas follows layout docks, turning through side, rear and overhead perspectives as it travels. Closed-car orbit frames supply the changing views, with lift, bank and a separate ground shadow inspired by ENERGITIX. This is a photographic depth effect, not a free-orbit 3D/CAD model.
 - First film: full orbit, overhead view, open doors and engine cover, then reverse to the assembled starting pose. It never enters the explosion segment. A left-side story moves through six chapters as the car plays on the right. Headlines, descriptions and key details fade and blur between chapters, following the frame actually painted. Phones stack the story above the car.
 - Second film: short left orbit, opening, explosion, a reading pause with six selectable part labels, then reverse to the same starting pose. Selecting a component updates its description and key detail in the story column.
 - Both films share 913 native frames from the accepted red master. Reverse playback reuses frames without duplicate downloads. Scroll distance controls pace; these are not autoplay videos.
-- A sampled `#fbfbfb` studio colour is shared by the page and canvas surface. Feathered frame boundaries remove the rectangular edge. The travelling still uses a background cutout; floor reflections stay in the films.
+- A sampled `#fbfbfb` studio colour is shared by the page and canvas surface. Feathered frame boundaries remove the rectangular edge. Travelling views use cached alpha mattes to remove the studio background; floor reflections stay in the films.
 - Desktop frames are 1280 × 720, approximately 36.3 MB. Mobile frames are 768 × 432, approximately 18.6 MB. Full loading starts after the visitor begins scrolling. Prioritised requests service the current position; at most 24 decoded frames are cached.
 - Reduced motion shows stills instead of the long scroll films. Failed motion requests retain a visible image and offer retry. Navigation, details and labels support keyboard interaction.
 - The technical portrait uses production Huayra BC Coupé specifications, including power, torque, Xtrac AMT, weight, drive, brakes, suspension and wheels. Source links appear on the page. The generated exploded illustration is conceptual, not an engineering disassembly manual.
@@ -82,6 +82,7 @@ Source files and backups are preserved locally. `assets/`, `exports/`, `analysis
 | `npm run build` | Production build |
 | `npm run test:visual` | Chromium/WebKit responsive interaction checks |
 | `npm run test:a11y` | axe-core WCAG A/AA scans |
+| `npm run test:travel` | Perspective-changing handoffs, reverse scrolling, film joins and transparent travel backgrounds |
 | `npm run test:gallery` | Eight-view expansion, keyboard/touch layouts and gallery accessibility |
 | `npm run test:chapters` | Chapter transitions, responsive composition and delayed-frame synchronisation |
 | `npm run prepare:sequences` | Rebuild the red desktop/mobile WebP frames |
