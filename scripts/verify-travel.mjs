@@ -7,7 +7,7 @@ await fs.mkdir(out, { recursive: true });
 const report = [];
 for (const engine of [chromium, webkit]) {
   const browser = await engine.launch();
-  for (const [name, width, height] of [['desktop', 1440, 1000], ['laptop', 1280, 800], ['phone', 390, 844]]) {
+  for (const [name, width, height] of [['monitor', 1920, 1080], ['wide-browser', 1864, 1010], ['desktop', 1440, 1000], ['laptop', 1280, 800], ['phone', 390, 844], ['small-phone', 360, 740]]) {
     const page = await browser.newPage({ viewport: { width, height } });
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await page.goto(process.env.BASE_URL || 'http://localhost:3002', { waitUntil: 'networkidle' });
@@ -24,12 +24,23 @@ for (const engine of [chromium, webkit]) {
       await page.evaluate(y => scrollTo(0, y), y);
       await page.waitForTimeout(50);
       await page.waitForFunction(() => { const c = document.querySelector('.travelling-car'); return c.dataset.frame === c.dataset.targetFrame; });
-      return page.locator('.travelling-car').evaluate(e => ({ frame: Number(e.dataset.frame), scene: e.dataset.scene, matteMs: Number(e.dataset.matteMs) }));
+      const sample = await page.locator('.travelling-car').evaluate(e => {
+        const c = e.getContext('2d'), strip = Math.max(1, Math.floor(e.width / innerWidth * 8));
+        // Inspect actual canvas alpha at both screen edges, not just DOM overflow.
+        const left = c.getImageData(0, 0, strip, e.height).data;
+        const right = c.getImageData(e.width - strip, 0, strip, e.height).data;
+        let clipped = false;
+        for (let i = 3; i < left.length; i += 4) if (left[i] > 200 || right[i] > 200) { clipped = true; break; }
+        return { frame: Number(e.dataset.frame), scene: e.dataset.scene, matteMs: Number(e.dataset.matteMs), clipped, left: Number(e.dataset.left), right: Number(e.dataset.right) };
+      });
+      assert(!sample.clipped, `${name}: opaque car pixels touch the screen edge`);
+      assert(sample.left >= 11 && sample.right <= width - 11, `${name}: rotated frame exceeds safe bounds`);
+      return sample;
     };
     const samples = [];
     for (const [from, to] of [['hero', 'explore'], ['explore', 'story'], ['story', 'design'], ['design', 'anatomy'], ['anatomy', 'specs'], ['specs', 'craft'], ['craft', 'finale']]) {
       const sequence = [];
-      for (const t of [.15, .5, .85]) {
+      for (const t of [.02, .15, .5, .85, .98]) {
         const y = keys[from].end + (keys[to].start - keys[from].end) * t;
         const sample = await seek(y);
         assert.equal(sample.scene, 'travel');
@@ -39,7 +50,7 @@ for (const engine of [chromium, webkit]) {
       }
       assert(new Set(sequence).size > 1, `${from}/${to} must change viewpoint`);
       const reverse = await seek(keys[from].end + (keys[to].start - keys[from].end) * .5);
-      assert.equal(reverse.frame, sequence[1], 'Reverse scrolling must restore the same view');
+      assert.equal(reverse.frame, sequence[2], 'Reverse scrolling must restore the same view');
     }
     for (const id of ['explore', 'anatomy']) {
       const start = await seek(keys[id].start + 1), end = await seek(keys[id].end - 1);

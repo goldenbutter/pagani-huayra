@@ -81,11 +81,21 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
       const end = scrollY >= keys.at(-1)!.at;
       const fly = a.id === b.id || end ? 0 : Math.sin(t * Math.PI);
       const target = end ? keys.at(-1)! : { x: mix(a.x, b.x, eased), y: mix(a.y, b.y, eased), w: mix(a.w, b.w, eased), h: mix(a.h, b.h, eased) };
-      const scale = Math.min(target.w / 1280, target.h / 720) * (1 + fly * (w < 768 ? 0.045 : 0.1));
+      const rotation = fly * (b.x >= a.x ? -1 : 1) * (w < 768 ? 0.025 : 0.065);
+      const margin = Math.min(32, Math.max(12, w * .017));
+      // Fit the whole rotated photograph, including the extra scale in flight.
+      // A safe resting dock alone cannot prevent a wide intermediate view clipping.
+      const rotatedWidth = Math.abs(Math.cos(rotation)) * 1280 + Math.abs(Math.sin(rotation)) * 720;
+      const scale = Math.min(
+        Math.min(target.w / 1280, target.h / 720) * (1 + fly * (w < 768 ? 0.045 : 0.1)),
+        (w - margin * 2) / rotatedWidth,
+      );
+      const halfWidth = rotatedWidth * scale / 2;
+      const centerX = Math.min(w - margin - halfWidth, Math.max(margin + halfWidth, target.x));
       // On stacked phone sections, carry the car below the departing paragraph.
       const lift = w < 768 ? (a.id === "story" || a.id === "design" ? -0.22 : 0.025) : 0.065;
       const centerY = target.y - fly * h * lift;
-      const box = { x: target.x - 640 * scale, y: centerY - 360 * scale, w: 1280 * scale, h: 720 * scale };
+      const box = { x: centerX - 640 * scale, y: centerY - 360 * scale, w: 1280 * scale, h: 720 * scale };
       let desired = end ? travelFrame(keys.at(-1)!.id, keys.at(-1)!.id, 1) : travelFrame(a.id, b.id, t), blend = 0, active = "travel", p = 0;
       for (const film of films) {
         const r = film.getBoundingClientRect();
@@ -102,7 +112,6 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
         requested = desired; store.warm(desired);
         store.get(desired).then((image) => { if (alive && requested === desired) { prepare(image, desired); status("ready"); } }).catch(() => { if (alive) { failed = true; status("error"); } });
       }
-      const rotation = fly * (b.x >= a.x ? -1 : 1) * (w < 768 ? 0.025 : 0.065);
       const paint = `${frame},${box.x.toFixed(2)},${box.y.toFixed(2)},${box.w.toFixed(2)},${blend.toFixed(3)},${rotation.toFixed(4)}`;
       if (prepared && paint !== lastPaint) {
         lastPaint = paint;
@@ -112,16 +121,17 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
         if (blend < 1 && cutout) {
           ctx.globalAlpha = (1 - blend) * (1 - fly * .78) * .13;
           ctx.filter = `blur(${10 + fly * 14}px)`; ctx.fillStyle = "#383838";
-          ctx.beginPath(); ctx.ellipse(target.x, target.y + box.h * .285, box.w * (.29 - fly * .04), box.h * .017, 0, 0, Math.PI * 2); ctx.fill(); ctx.filter = "none";
+          ctx.beginPath(); ctx.ellipse(centerX, target.y + box.h * .285, box.w * (.29 - fly * .04), box.h * .017, 0, 0, Math.PI * 2); ctx.fill(); ctx.filter = "none";
         }
-        ctx.translate(target.x, centerY); ctx.rotate(rotation);
+        ctx.translate(centerX, centerY); ctx.rotate(rotation);
         const x = -box.w / 2, y = -box.h / 2;
         if (blend < 1 && cutout) {
           ctx.globalAlpha = 1 - blend; ctx.drawImage(cutout, x, y, box.w, box.h);
         }
         if (blend > 0 || !cutout) { ctx.globalAlpha = cutout ? blend : 1; ctx.drawImage(photo, x, y, box.w, box.h); }
         ctx.restore();
-        el.dataset.frame = String(frame); el.dataset.scene = active; el.dataset.progress = p.toFixed(4); el.dataset.dock = end ? keys.at(-1)!.id : a.id; el.dataset.x = target.x.toFixed(1); el.dataset.y = centerY.toFixed(1);
+        el.dataset.frame = String(frame); el.dataset.scene = active; el.dataset.progress = p.toFixed(4); el.dataset.dock = end ? keys.at(-1)!.id : a.id; el.dataset.x = centerX.toFixed(1); el.dataset.y = centerY.toFixed(1);
+        el.dataset.left = (centerX - halfWidth).toFixed(2); el.dataset.right = (centerX + halfWidth).toFixed(2);
       }
       const storyFrame = `${active}:${frame}`;
       if (prepared && active !== "travel" && storyFrame !== lastStoryFrame) {

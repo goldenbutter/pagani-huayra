@@ -100,3 +100,12 @@ A reusable 512 × 288 alpha matte isolates each view; its cache is bounded to 36
 Lint, typecheck and production builds passed. `npm run test:travel` passed six Chromium/WebKit desktop, laptop and phone cases: all seven handoffs change perspective, reverse scrolling restores the matching view, travelling frames remain closed, both films meet frame zero, travel backgrounds are transparent, and no page errors or horizontal overflow occur. The final phone path was included in a second successful run. Sixteen chapter cases and delayed-frame sync, eight existing scroll cases, six navigation/specification cases and four axe A/AA scans also passed. A final layer-order refinement kept copy/gallery above the car; dock captures and phone/gallery controls were checked on that build.
 
 Three recorded 3.5-second desktop scroll passes had median frame intervals of 16.7 ms and p95 of 16.7–16.8 ms locally. This is a local browser sample, not a physical-phone or slow-network performance claim. Evidence and recordings are in `analysis/travel/`; physical-device testing remains unperformed.
+
+
+## Screen-edge containment and editorial readability: 29 October 2026
+
+The travelling car now fits its full rotated frame inside horizontal viewport margins, accounting for the temporary increase in scale during a handoff. Its corrected position also drives the ground shadow and annotation bounds. Hero invitations, material captions, body copy, specification values/units and engineering details use larger type with responsive wrapping.
+
+Lint, typecheck and production build passed. The expanded travel suite passed twelve Chromium/WebKit cases at 1920 × 1080, 1864 × 1010, 1440 × 1000, 1280 × 800, 390 × 844 and 360 × 740. It samples five positions through each of seven handoffs, independently checks canvas edge alpha and rotated frame bounds, and verifies reverse motion and both film boundaries.
+
+`npm run test:editorial` passed twelve Chromium/WebKit monitor, laptop, compact laptop, tablet, phone and small-phone cases. It checks minimum type sizes, text overflow, footer clearance and expanded engineering details. The existing eight-layout scroll suite, six navigation/specification cases and four axe A/AA scans passed. Monitor and phone screenshots were reviewed. Evidence: `analysis/editorial/`, `analysis/travel/bounds-checks.log`, `analysis/editorial-visual.log` and `analysis/editorial-a11y.log`. These checks use browser emulation; physical-device testing remains unperformed.

@@ -271,3 +271,51 @@ html[data-studio-ready="true"] .dock-fallback { opacity:0; }
 @media(prefers-reduced-motion:reduce) and (max-width:767px) {
  .split-film.anatomy-film .reduced-assembly { top:49%; height:29%; }
 }
+
+/* Editorial copy uses the same readable scale as the cinematic narrative. */
+.hero-kicker,.hero-foot .eyebrow,.travel-copy .eyebrow,
+.travel-section .section-label,.craft-studio .section-label,
+.craft-title>.reveal>.eyebrow,.red-finale>.eyebrow,.finale-bottom .eyebrow { font-size:11px; line-height:1.5; }
+.hero-foot p { font-size:clamp(32px,2.2vw,42px); line-height:1.15; }
+.hero-invitation { max-width:32%; }
+.hero-invitation>span { font-size:clamp(22px,1.5vw,28px); line-height:1.4; }
+.round-link { font-size:11px; line-height:1.5; }
+.hero-baseline,.travel-bottom { font-size:10px; line-height:1.6; }
+.hero-baseline>span { max-width:46%; }
+.travel-copy p { max-width:480px; font-size:clamp(24px,1.6vw,30px); line-height:1.5; color:#48494d; }
+.material-inline>.eyebrow { font:600 16px/1.5 "Rajdhani",sans-serif; letter-spacing:.06em; color:#48494d; }
+.red-specs dt { font-size:20px; color:#48494d; }
+.red-specs dd { font-size:clamp(34px,2.4vw,44px); }
+.red-specs dd span { font:600 16px/1.45 "Rajdhani",sans-serif; letter-spacing:.035em; color:#48494d; }
+.technical-details summary { font-size:12px; line-height:1.6; gap:12px; }
+.technical-details dt { font-size:18px; }
+.technical-details dd { font-size:20px; color:#48494d; }
+.travel-copy p.spec-note { font-size:16px; line-height:1.5; }
+@media(min-width:768px) and (max-width:1100px) {
+ .travel-copy p { font-size:22px; }
+ .hero-invitation { max-width:37%; }
+ .red-specs dd { font-size:30px; }
+ .red-specs dd span { font-size:14px; }
+ .material-inline { gap:18px; }
+}
+@media(max-width:767px) {
+ .hero-kicker,.hero-foot .eyebrow,.travel-copy .eyebrow,
+ .travel-section .section-label,.craft-studio .section-label,
+ .craft-title>.reveal>.eyebrow,.red-finale>.eyebrow,.finale-bottom .eyebrow { font-size:9px; }
+ .hero-foot { bottom:115px; gap:18px; }
+ .hero-foot p { font-size:26px; }
+ .hero-invitation { max-width:48%; }
+ .hero-invitation>span { font-size:18px; }
+ .round-link { font-size:9px; gap:10px; }
+ .round-link>span { flex-shrink:0; }
+ .hero-baseline,.travel-bottom { font-size:8px; }
+ .travel-copy p { font-size:20px; line-height:1.5; max-width:100%; }
+ .material-inline>.eyebrow { font-size:14px; }
+ .red-specs dt { font-size:18px; }
+ .red-specs dd { font-size:30px; }
+ .red-specs dd span { font-size:14px; }
+ .technical-details summary { font-size:10px; }
+ .technical-details dt { font-size:17px; }
+ .technical-details dd { font-size:19px; }
+ .travel-copy p.spec-note { font-size:14px; }
+}
