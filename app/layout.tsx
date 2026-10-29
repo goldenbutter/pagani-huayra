@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { socialImage } from "@/lib/social";
 import { Analytics } from "@vercel/analytics/next";
 import "@fontsource-variable/orbitron";
 import "@fontsource/rajdhani/400.css";
@@ -20,19 +21,15 @@ export const metadata: Metadata = {
     description: "A cinematic automotive portfolio concept by iBithun.",
     url: "/",
     type: "website",
-    images: [
-      {
-        url: "/assets/images/pagani-og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Red Pagani Huayra BC, an independent concept by iBithun",
-      },
-    ],
+    siteName: "Pagani Huayra BC | iBithun Concept",
+    locale: "en_US",
+    images: [socialImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Huayra BC: An iBithun Concept",
-    images: ["/assets/images/pagani-og.jpg"],
+    description: "A cinematic automotive portfolio concept by iBithun.",
+    images: [socialImage],
   },
 };
 export const viewport: Viewport = {

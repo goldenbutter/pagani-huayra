@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialImage } from "@/lib/social";
 import Link from "next/link";
 import "./teaser.css";
 export const metadata: Metadata = {
@@ -10,7 +11,15 @@ export const metadata: Metadata = {
     description: "A 19-second cinematic engineering study by iBithun.",
     url: "/teaser",
     type: "website",
-    images: [{ url: "/assets/images/pagani-og.jpg", width: 1200, height: 630, alt: "Red Huayra BC, an iBithun concept" }],
+    siteName: "Pagani Huayra BC | iBithun Concept",
+    locale: "en_US",
+    images: [socialImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Huayra BC: Inside the Sculpture",
+    description: "A 19-second cinematic engineering study by iBithun.",
+    images: [socialImage],
   },
 };
 export default function TeaserPage() {

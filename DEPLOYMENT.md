@@ -15,13 +15,13 @@
 - Build: `npm run build`
 - Application secrets: none required
 
-The production site is publicly reachable on its Vercel mirror. The custom hostname remains pending the records below. The Vercel connector required reauthentication, so publication used the already authenticated Vercel CLI 65.5.0, verified as the latest stable version at release.
+The production site is publicly reachable on its Vercel mirror. The custom hostname was verified on 29 October 2026 after the Hostinger records below were added. HTTPS returns the correct site. The Vercel connector required reauthentication, so publication used the already authenticated Vercel CLI 65.5.0, verified as the latest stable version at release.
 
 ## External DNS at Hostinger
 
-The subdomain is attached to the correct project. Vercel ownership verification and DNS configuration are pending. Hostinger nameservers are `apollo.dns-parking.com` and `athena.dns-parking.com`.
+The subdomain is attached to the correct project. Vercel ownership verification and DNS configuration are complete. Hostinger nameservers are `apollo.dns-parking.com` and `athena.dns-parking.com`.
 
-Add these records in the `ibithun.com` DNS zone:
+The following records are installed in the `ibithun.com` DNS zone:
 
 | Type | Name | Value | TTL |
 | --- | --- | --- | --- |
@@ -30,7 +30,7 @@ Add these records in the `ibithun.com` DNS zone:
 
 These values were returned by Vercel for this project on 29 October 2026. Add a separate TXT value; do not replace ENERGITIX or other verification records. Preserve the parent-domain ownership, nameservers, website and mail records.
 
-After the user saves the records:
+To recheck the installed records:
 
 ```sh
 vercel domains verify demo-pagani.ibithun.com --project pagani-huayra --scope i-bithun --format json
@@ -52,4 +52,10 @@ The README preview links to a native video player with playback controls. All so
 
 The GitHub push of `7a2e173` automatically produced deployment `dpl_3z46q6bVS7b4rZEHJnV6LBLaskMQ`, READY in production. This confirmed the Git integration, not only a manual CLI deployment. The public mirror returned HTTP 200 for the homepage, player, MP4 and runtime WebP frames. The README GIF also returned HTTP 200 from GitHub.
 
-Chromium and WebKit passed the live player/homepage checks on desktop and phone: video duration and real playback, social/canonical metadata, the fully exploded scroll frame, layout fit, zero player axe violations and no page errors. Custom-domain verification and analytics collection remain pending the user actions above.
+Chromium and WebKit passed the live player/homepage checks on desktop and phone: video duration and real playback, social/canonical metadata, the fully exploded scroll frame, layout fit, zero player axe violations and no page errors. Custom-domain verification is complete. Analytics collection remains unverified.
+
+## Social previews
+
+The original 1200 × 630 JPEG and OG tags were present before custom-domain activation. A reported WhatsApp preview failure remains distinct from successful HTTP crawler checks; earlier DNS failure is a possible cause, not a proven diagnosis. Both the homepage and teaser now declare image MIME type, secure URL, site name, locale and explicit Twitter image alt text. They share `/media/pagani-og-v2.jpg`, a fresh URL for the existing artwork. The original image remains available.
+
+Share the HTTPS URL directly. Validate actual previews in each target app after domain activation; a successful crawler-style HTTP request is not an in-app preview test. WhatsApp may also suppress previews through its optional Disable link previews setting. Do not claim that an image URL change forces every app to refresh cached page metadata.

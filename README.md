@@ -4,7 +4,7 @@ An independent automotive portfolio concept by [iBithun](https://portfolio.ibith
 
 **[Explore the website](https://pagani-huayra-ochre.vercel.app)** · **[Watch the film](https://pagani-huayra-ochre.vercel.app/teaser)** · **[Work with iBithun](https://portfolio.ibithun.com)**
 
-The custom hostname **demo-pagani.ibithun.com** is attached in Vercel and awaits Hostinger DNS verification. The live links above work now.
+The custom hostname **https://demo-pagani.ibithun.com** is verified in Vercel and serves the site over HTTPS.
 
 ## Cinematic preview
 

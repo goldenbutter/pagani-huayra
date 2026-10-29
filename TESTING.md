@@ -123,3 +123,9 @@ Lint, typecheck and production build passed. All twelve Chromium/WebKit travel c
 Specification handoffs now measure the live reading column and keep the complete rotated car frame to its left while their vertical ranges overlap. A buffer eases the constraint before and after the reading area, including when engineering details are expanded. The contact button, portfolio/replay links, back-to-top link and footer captions use larger responsive type.
 
 Lint, typecheck and production build passed. Twelve Chromium/WebKit travel cases passed with pixel-based text-clearance checks for both story and specifications, plus screen-edge and reverse-scroll checks. Twelve editorial cases passed with new closing-link font and overflow assertions. The eight-layout scroll suite, six navigation cases and four axe scans passed. Six focused cases at 1920, 1440 and 834px checked eleven departure positions with details open and closed. Desktop transition and desktop/phone closing screenshots were reviewed. Evidence: `analysis/specs-clearance-*.log`, `analysis/specs-focused.log`, `analysis/closing-editorial.log` and `analysis/editorial/`. Physical-device testing remains unperformed.
+
+## Social preview metadata: 29 October 2026
+
+The original live homepage returned OG tags in its initial head and a valid 92,775-byte JPEG to Facebook, LinkedIn and X crawler-style requests. A WhatsApp-style request also followed the HTTP-to-HTTPS redirect successfully. This did not reproduce the user's missing preview inside WhatsApp.
+
+The update adds explicit secure image URL, JPEG type, site name, locale and Twitter alt text on the homepage and teaser, using a fresh image URL while preserving the original artwork. Lint, typecheck and production build passed. Both prerendered HTML heads were checked for the complete metadata and consistent image URLs; the JPEG decoded at 1200 × 630. Actual WhatsApp rendering remains a separate user-side confirmation.
