@@ -59,3 +59,12 @@ The public `goldenbutter/pagani-huayra` repository and iBithun Vercel project ar
 `node scripts/verify-release.mjs` passed locally in Chromium and WebKit at 1440 × 1000 and 390 × 844. It verified the 18.77-second video's duration and real playback, homepage/teaser metadata, horizontal fit, zero player axe violations, the homepage exploded frame and absence of page errors. The same four Chromium/WebKit cases then passed on the public production mirror, including actual playback, the fully exploded scroll frame and zero player axe violations. Evidence is in ignored `analysis/release/` and `analysis/release-production.log`. The release check caught an overbroad upload exclusion; root-anchored rules corrected it, and a deployment dry run confirmed all 1,826 runtime frames are included.
 
 Custom-domain HTTPS and analytics collection require separate verification after the user adds Hostinger records and enables Web Analytics. Their configuration and current status are in `DEPLOYMENT.md`.
+
+
+## Reference-inspired chapter layout: 29 October 2026
+
+The cinematic stages now use a left narrative/right film composition on desktop, with stacked text on phones. Six orbit chapters follow the actually painted frame. The exploded stage presents the selected component in its narrative panel. Chapter changes fade and blur, with reduced-motion alternatives.
+
+`npm run test:chapters` passed ten combinations: Chromium and WebKit at 1440 × 1000, 834 × 1194, 390 × 844, 360 × 740 and 844 × 390. It checks the origin, material, overhead, door and power chapters, return/backward scrolling, text fit, separate desktop columns, selected part descriptions and page errors. A delayed-frame check holds the matching opening narrative during a 2.2-second frame delay, then advances only when the door frame is painted.
+
+The eight-layout existing scroll suite and six navigation/specification cases passed. Four axe A/AA scans passed, including reduced motion and the settled exploded chapter. Contrast scans wait for the brief text transition to finish rather than sampling a fading intermediate frame. Desktop, phone and landscape chapter screenshots were visually reviewed. Evidence: `analysis/chapters/`, `analysis/chapters-regression.log`, `analysis/chapters-a11y.log` and `analysis/split-build.log`.

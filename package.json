@@ -12,7 +12,8 @@
     "test:visual": "node scripts/verify-studio.mjs && node scripts/verify-studio-navigation.mjs",
     "generate:og": "node scripts/generate-og.mjs",
     "test:a11y": "node scripts/check-accessibility.mjs",
-    "test:exploded": "node scripts/verify-studio.mjs"
+    "test:exploded": "node scripts/verify-studio.mjs",
+    "test:chapters": "node scripts/verify-chapters.mjs && node scripts/verify-chapter-loading.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

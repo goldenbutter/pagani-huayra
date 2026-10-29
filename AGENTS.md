@@ -14,7 +14,7 @@ This is an independent iBithun automotive portfolio concept, not an official Pag
 
 The active design is one red Huayra BC on a `#fbfbfb` studio surface. Do not restore the white/green selector without a new request. Preserve the approved typography, white/red palette and responsive layouts. Do not use em dashes in website copy, metadata or social previews.
 
-`RedExperience` and `TravellingCar` own the active page. One persistent canvas moves between section docks. Stage one uses frames 0–792, opening then reversing without an explosion. Stage two uses frames 0–120 and 673–912, then reverses. Both return to frame zero. Part labels belong to stage two. Preserve camera continuity and the page/video boundary blend.
+`RedExperience` and `TravellingCar` own the active page. One persistent canvas moves between section docks. Stage one uses frames 0–792, opening then reversing without an explosion. Stage two uses frames 0–120 and 673–912, then reverses. Both return to frame zero. Part labels belong to stage two. Preserve camera continuity and the page/video boundary blend. Film sections use a left narrative/right car composition on desktop and stacked copy on phones. `filmStory` follows the actually painted frame through `studio-frame` events, not a timer or download target. Keep selected part descriptions in the narrative panel, and respect reduced motion for text transitions.
 
 ## Media and source integrity
 

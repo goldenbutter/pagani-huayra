@@ -1,0 +1,11 @@
+import {chromium} from 'playwright';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+const b=await chromium.launch();const p=await b.newPage({viewport:{width:1440,height:1000}});
+await p.route(/\/07(09|10|11)\.webp$/,async route=>{await new Promise(resolve=>setTimeout(resolve,2200));await route.continue().catch(()=>{});});
+await p.goto(process.env.BASE_URL||'http://localhost:3002',{waitUntil:'networkidle'});await p.waitForFunction(()=>document.documentElement.dataset.studioReady==='true');
+await p.locator('#experience').evaluate(e=>window.scrollTo(0,e.offsetTop+(e.offsetHeight-innerHeight)*(.035+.93*.46*710/792)));
+await p.waitForTimeout(650);
+assert.equal(await p.locator('.travelling-car').getAttribute('data-frame'),'0');assert.equal(await p.locator('#experience .film-narrative').getAttribute('data-story'),'origin');
+await p.waitForFunction(()=>Math.abs(Number(document.querySelector('.travelling-car').dataset.frame)-710)<=1&&document.querySelector('#experience .film-narrative').dataset.story==='doors');
+await fs.mkdir('analysis/chapters',{recursive:true});await fs.writeFile('analysis/chapters/loading.json',JSON.stringify({passed:true,delayMs:2200,heldStory:'origin',loadedStory:'doors'},null,2));await b.close();console.log('PASS: delayed frame holds matching narrative until paint');

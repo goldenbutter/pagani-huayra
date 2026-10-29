@@ -68,12 +68,11 @@ function travellingCutout(image: CanvasImageSource) {
   return canvas;
 }
 
-export default function TravellingCar() {
+export default function TravellingCar({ selected, onSelectPart }: { selected: string; onSelectPart: (id: string) => void }) {
   const { reduced } = useExperience();
   const canvas = useRef<HTMLCanvasElement>(null);
   const [attempt, setAttempt] = useState(0);
   const [annotations, setAnnotations] = useState<AnnotationState>(initial);
-  const [selected, setSelected] = useState<string>("engine");
   useEffect(() => {
     const retry = () => setAttempt((n) => n + 1);
     window.addEventListener("studio-retry", retry);
@@ -85,7 +84,7 @@ export default function TravellingCar() {
     const ctx = el?.getContext("2d");
     if (!el || !ctx) return;
     let alive = true, raf = 0, frame = 0, requested = -1, prepared = false, cutout: HTMLCanvasElement | null = null;
-    let width = 0, height = 0, lastPaint = "", lastAnnotation = 0, failed = false, preloading = false;
+    let width = 0, height = 0, lastPaint = "", lastAnnotation = 0, failed = false, preloading = false, lastStoryFrame = "";
     const store = new StudioFrames(innerWidth < 768 ? "mobile" : "desktop");
     const mask = edgeMask(), photo = document.createElement("canvas"); photo.width = 1280; photo.height = 720;
     const pc = photo.getContext("2d")!;
@@ -155,9 +154,14 @@ export default function TravellingCar() {
         ctx.restore();
         el.dataset.frame = String(frame); el.dataset.scene = active; el.dataset.progress = p.toFixed(4); el.dataset.dock = end ? keys.at(-1)!.id : a.id; el.dataset.x = target.x.toFixed(1); el.dataset.y = centerY.toFixed(1);
       }
+      const storyFrame = `${active}:${frame}`;
+      if (prepared && active !== "travel" && storyFrame !== lastStoryFrame) {
+        lastStoryFrame = storyFrame;
+        window.dispatchEvent(new CustomEvent("studio-frame", { detail: { id: active, frame } }));
+      }
       if (now - lastAnnotation > 65) {
         lastAnnotation = now;
-        const visible = active === "anatomy" && frame >= 825;
+        const visible = active === "anatomy" && frame >= 825 && !filmState("anatomy", p).returning;
         setAnnotations((prev) => !visible && !prev.visible ? prev : { frame, box, width: w, height: h, visible });
       }
     };
@@ -172,18 +176,16 @@ export default function TravellingCar() {
     const ax = annotations.box.x + mix(part.start[0], part.end[0], movement) * annotations.box.w;
     const ay = annotations.box.y + mix(part.start[1], part.end[1], movement) * annotations.box.h;
     const lx = mobile ? 22 + (i % 2) * (annotations.width / 2) : annotations.box.x + part.label[0] * annotations.box.w;
-    const ly = mobile ? annotations.height - 260 + Math.floor(i / 2) * 42 : annotations.box.y + part.label[1] * annotations.box.h;
+    const ly = mobile ? annotations.height - 210 + Math.floor(i / 2) * 42 : annotations.box.y + part.label[1] * annotations.box.h;
     return { ...part, ax, ay, lx, ly, right: !mobile && i >= 3 };
   });
-  const selectedPart = partLabels.find((p) => p.id === selected)!;
   return <>
     <canvas ref={canvas} className="travelling-car" aria-hidden="true" />
     <div className={`part-annotations ${visible ? "visible" : ""}`} aria-hidden={!visible} inert={!visible}>
       <svg className="part-lines" width="100%" height="100%" aria-hidden="true">
         {labels.filter((p) => !mobile || p.id === selected).map((part) => <g key={part.id} className={part.id === selected ? "selected" : ""}><path d={`M ${part.ax} ${part.ay} L ${part.right ? part.lx - 24 : part.lx + 24} ${part.ay} L ${part.lx} ${part.ly + 12}`} /><circle cx={part.ax} cy={part.ay} r={part.id === selected ? 4 : 2.5} /></g>)}
       </svg>
-      {labels.map((part, i) => <button key={part.id} className={`part-label ${part.right ? "right" : ""} ${part.id === selected ? "selected" : ""}`} style={{ left: part.lx, top: part.ly }} aria-pressed={part.id === selected} aria-describedby="part-description" onClick={() => setSelected(part.id)} onMouseEnter={() => setSelected(part.id)} onFocus={() => setSelected(part.id)}><span>0{i + 1}</span>{part.name}</button>)}
-      <p id="part-description" className="part-description"><strong>{selectedPart.name}</strong>{selectedPart.detail}<small>AN EXPLODED DESIGN STUDY</small></p>
+      {labels.map((part, i) => <button key={part.id} className={`part-label ${part.right ? "right" : ""} ${part.id === selected ? "selected" : ""}`} style={{ left: part.lx, top: part.ly }} aria-pressed={part.id === selected} aria-describedby="part-description" onClick={() => onSelectPart(part.id)} onMouseEnter={() => onSelectPart(part.id)} onFocus={() => onSelectPart(part.id)}><span>0{i + 1}</span>{part.name}</button>)}
     </div>
   </>;
 }

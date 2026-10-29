@@ -9,6 +9,7 @@ for(const [name,width,height,motion] of [['desktop',1440,1000,'reduce'],['phone'
   await p.locator('#engineering').evaluate(e=>window.scrollTo(0,e.offsetTop+(e.offsetHeight-innerHeight)*.5));
   await p.waitForFunction(()=>document.querySelector('.travelling-car')?.dataset.frame==='912');
   await p.locator('.part-annotations.visible').waitFor();
+  await p.waitForFunction(()=>{const el=document.querySelector('#engineering .film-story-content');return el?.querySelector('#part-description') && getComputedStyle(el).opacity==='1' && getComputedStyle(el).filter==='blur(0px)';});
  }
  const r=await new AxeBuilder({page:p}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
  report.push({name,violations:r.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))});await context.close();
