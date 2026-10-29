@@ -18,7 +18,7 @@ The active design is one red Huayra BC on a `#fbfbfb` studio surface. Do not res
 
 ## Media and source integrity
 
-- Web assets live in `public/assets/`; the README preview and player media live in `public/media/`.
+- Web assets live in `public/assets/`; the README preview and player media live in `public/media/`. Anchor local-directory exclusions in `.vercelignore` as `/assets/` and `/exports/`. An unanchored `assets/` rule also excludes runtime frames. Use `vercel deploy --dry` to verify both desktop/mobile frame directories remain included.
 - Preserve originals in local `assets/source/`, edited masters in `exports/`, retired media in `assets/archive/`, and rollback evidence in `analysis/`. These local production folders are excluded from Git and Vercel uploads. Never delete them to tidy the repository.
 - Do not spend image/video generation credits or regenerate accepted footage without explicit user authorization.
 - The user accepted the existing generated steering-wheel side-switch. Do not claim that it is repaired. Future generations must preserve the fixed vehicle-side cockpit layout documented in `docs/prompts/vehicle-generation-master-v5.md`.

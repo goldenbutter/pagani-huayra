@@ -47,3 +47,9 @@ The official `@vercel/analytics` SDK is integrated in the root layout, covering 
 The public repository contains source, prompts, runtime image sequences, red reference stills, the short MP4, animated README preview and poster. Local original images/clips, edited masters, inactive-colour archives, analysis, environment files and provider receipts remain preserved on disk and are excluded from Git and Vercel. The checkout is linked only to this iBithun project. ENERGITIX is unchanged.
 
 The README preview links to a native video player with playback controls. All social metadata uses the requested canonical hostname. The site remains an unofficial portfolio concept, with no vehicle sales or payments.
+
+## Verified release
+
+The GitHub push of `7a2e173` automatically produced deployment `dpl_3z46q6bVS7b4rZEHJnV6LBLaskMQ`, READY in production. This confirmed the Git integration, not only a manual CLI deployment. The public mirror returned HTTP 200 for the homepage, player, MP4 and runtime WebP frames. The README GIF also returned HTTP 200 from GitHub.
+
+Chromium and WebKit passed the live player/homepage checks on desktop and phone: video duration and real playback, social/canonical metadata, the fully exploded scroll frame, layout fit, zero player axe violations and no page errors. Custom-domain verification and analytics collection remain pending the user actions above.
