@@ -41,7 +41,7 @@ No API keys or environment variables are required. `demo-pagani.ibithun.com` is 
 - Second film: short left orbit, opening, explosion, a reading pause with six selectable part labels, then reverse to the same starting pose. Selecting a component updates its description and key detail in the story column.
 - Both films share 913 native frames from the accepted red master. Reverse playback reuses frames without duplicate downloads. Scroll distance controls pace; these are not autoplay videos.
 - A sampled `#fbfbfb` studio colour is shared by the page and canvas surface. Feathered frame boundaries remove the rectangular edge. Travelling views use cached alpha mattes to remove the studio background; floor reflections stay in the films.
-- Desktop frames are 1280 × 720, approximately 36.3 MB. Mobile frames are 768 × 432, approximately 18.6 MB. Full loading starts after the visitor begins scrolling. Prioritised requests service the current position; at most 24 decoded frames are cached.
+- Desktop frames are 1280 × 720, approximately 36.3 MB. Mobile frames are 768 × 432, approximately 18.6 MB. A shared 336 KiB preview sheet lets both films respond on the first scroll. The player requests one full-resolution frame at a time for the current position and keeps up to 24 recently decoded frames.
 - Reduced motion shows stills instead of the long scroll films. Failed motion requests retain a visible image and offer retry. Navigation, details and labels support keyboard interaction.
 - The technical portrait uses production Huayra BC Coupé specifications, including power, torque, Xtrac AMT, weight, drive, brakes, suspension and wheels. Source links appear on the page. The generated exploded illustration is conceptual, not an engineering disassembly manual.
 
@@ -85,6 +85,7 @@ Source files and backups are preserved locally. `assets/`, `exports/`, `analysis
 | `npm run test:travel` | Perspective-changing handoffs, reverse scrolling, film joins and transparent travel backgrounds |
 | `npm run test:gallery` | Eight-view expansion, keyboard/touch layouts and gallery accessibility |
 | `npm run test:chapters` | Chapter transitions, responsive composition and delayed-frame synchronisation |
+| `npm run test:first-scroll` | Check first-visit playback in both films with delayed requests on desktop and phone |
 | `npm run prepare:sequences` | Rebuild the red desktop/mobile WebP frames |
 | `npm run generate:og` | Rebuild the red-only social image |
 | `python3 scripts/prepare-teaser.py` | Rebuild the animated README preview from the accepted MP4 |

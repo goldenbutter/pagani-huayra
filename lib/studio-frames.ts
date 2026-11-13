@@ -1,67 +1,75 @@
-import { STUDIO_FRAMES } from "@/data/studio";
+type DecodedFrame = ImageBitmap | HTMLImageElement;
 
-/** Prioritised compressed frame cache with a bounded decoded working set. */
+function release(image: DecodedFrame) {
+  if ("close" in image) image.close();
+}
+
+async function decode(blob: Blob): Promise<DecodedFrame> {
+  if (typeof createImageBitmap === "function") return createImageBitmap(blob);
+  const url = URL.createObjectURL(blob);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    return image;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+/** The renderer requests one full-size frame at a time and retains recent shots for reverse scrolling. */
 export class StudioFrames {
-  private blobs = new Map<number, Blob>();
-  private decoded = new Map<number, ImageBitmap>();
-  private pending = new Map<number, Promise<ImageBitmap>>();
-  private downloads = new Map<number, Promise<Blob>>();
+  private decoded = new Map<number, DecodedFrame>();
   private controller = new AbortController();
-  private queue = new Set<number>();
-  private active = 0;
-  private target = 0;
-  private stopped = false;
   constructor(private size: "desktop" | "mobile") {}
-  private fetchFrame(index: number) {
-    const blob = this.blobs.get(index);
-    if (blob) return Promise.resolve(blob);
-    const pending = this.downloads.get(index);
-    if (pending) return pending;
-    const promise = fetch(`/assets/studio/${this.size}/${String(index).padStart(4, "0")}.webp`, { signal: this.controller.signal })
-      .then((response) => { if (!response.ok) throw new Error(`Frame unavailable: ${response.status}`); return response.blob(); })
-      .then((value) => { if (!this.stopped) this.blobs.set(index, value); return value; })
-      .finally(() => this.downloads.delete(index));
-    this.downloads.set(index, promise);
-    return promise;
-  }
+
   async get(index: number) {
-    this.target = index;
     const cached = this.decoded.get(index);
-    if (cached) { this.decoded.delete(index); this.decoded.set(index, cached); return cached; }
-    const pending = this.pending.get(index);
-    if (pending) return pending;
-    const promise = this.fetchFrame(index).then((blob) => createImageBitmap(blob)).then((image) => {
-      if (this.stopped) { image.close(); throw new Error("Frame cache disposed"); }
-      this.decoded.set(index, image);
-      while (this.decoded.size > 24) {
-        const oldest = this.decoded.keys().next().value!;
-        this.decoded.get(oldest)?.close(); this.decoded.delete(oldest);
-      }
-      return image;
-    }).finally(() => this.pending.delete(index));
-    this.pending.set(index, promise);
-    return promise;
-  }
-  warm(index: number) {
-    this.target = index;
-    for (let d = -12; d <= 24; d++) {
-      const i = index + d;
-      if (i >= 0 && i < STUDIO_FRAMES && !this.blobs.has(i)) this.queue.add(i);
+    if (cached) {
+      this.decoded.delete(index);
+      this.decoded.set(index, cached);
+      return cached;
     }
-    this.pump();
-  }
-  preload() {
-    for (let i = 0; i < STUDIO_FRAMES; i++) if (!this.blobs.has(i)) this.queue.add(i);
-    this.pump();
-  }
-  private pump() {
-    if (this.stopped) return;
-    while (this.active < 4 && this.queue.size) {
-      const candidates = [...this.queue];
-      const i = candidates.reduce((a, b) => Math.abs(a - this.target) <= Math.abs(b - this.target) ? a : b);
-      this.queue.delete(i); this.active++;
-      this.fetchFrame(i).catch(() => {}).finally(() => { this.active--; this.pump(); });
+    const url = `/assets/studio/${this.size}/${String(index).padStart(4, "0")}.webp`;
+    const response = await fetch(url, { signal: this.controller.signal });
+    if (!response.ok) throw new Error(`Frame unavailable: ${response.status}`);
+    const image = await decode(await response.blob());
+    if (this.controller.signal.aborted) {
+      release(image);
+      throw new Error("Frame cache disposed");
     }
+    this.decoded.set(index, image);
+    if (this.decoded.size > 24) {
+      const oldest = this.decoded.keys().next().value!;
+      release(this.decoded.get(oldest)!);
+      this.decoded.delete(oldest);
+    }
+    return image;
   }
-  dispose() { this.stopped = true; this.controller.abort(); this.queue.clear(); this.blobs.clear(); this.decoded.forEach((image) => image.close()); this.decoded.clear(); }
+
+  dispose() {
+    this.controller.abort();
+    this.decoded.forEach(release);
+    this.decoded.clear();
+  }
+}
+
+/** One small image covers both films, including the jump into the anatomy sequence. */
+export class StudioPreview {
+  private sheet = new Image();
+  private tile = document.createElement("canvas");
+  private ctx = this.tile.getContext("2d")!;
+  constructor() {
+    this.tile.width = 256;
+    this.tile.height = 144;
+    this.sheet.src = "/assets/studio/scrub-preview.webp";
+  }
+  get(index: number) {
+    if (!this.sheet.complete || !this.sheet.naturalWidth) return null;
+    const tile = index / 8;
+    const { width, height } = this.tile;
+    this.ctx.drawImage(this.sheet, (tile % 12) * width, Math.floor(tile / 12) * height,
+      width, height, 0, 0, width, height);
+    return this.tile;
+  }
 }
