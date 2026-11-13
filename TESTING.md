@@ -147,3 +147,7 @@ The cold-cache regression opens each film in its own browser context, delays stu
 ## First-visit tyre loader · 13 November 2026
 
 Run `node scripts/verify-tyre-loader.mjs` against the production build. Chromium and WebKit each passed the desktop and phone first-visit, held-asset, completion and refresh checks, plus six cases covering failed or stalled assets, immediate scrolling, reduced motion, direct section links and disabled JavaScript. The separate first-scroll regression passed for both films in all eight browser/viewport cases.
+
+## Native resolution during the first scroll · 13 November 2026
+
+The first-scroll test now inspects the width of the actual colour images drawn to the film compositor, excluding alpha masks. The previous player enlarged 256-pixel tiles in both films at both tested widths. On a local production build using the new player, all eight Chromium/WebKit, film and viewport combinations painted 32 distinct frames during 1.8 seconds of continuous cold scrolling with 180 ms of added request delay. The observed colour sources were 1280 pixels wide on desktop, and 768 pixels wide plus the 1280-pixel poster on phones. The exact native frame arrived without an additional scroll after stopping.

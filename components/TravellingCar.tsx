@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { StudioFrames, StudioPreview } from "@/lib/studio-frames";
+import { StudioFrames } from "@/lib/studio-frames";
 import { TravelMatte } from "@/lib/travel-matte";
 import { travelFrame } from "@/data/travel";
 import { clamp01, filmState, partLabels, POSTER, smooth, type FilmId } from "@/data/studio";
@@ -41,10 +41,9 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
     let alive = true, raf = 0, frame = 0, requested = -1, prepared = false, travelWanted = true, cutout: HTMLCanvasElement | null = null;
     let width = 0, height = 0, lastPaint = "", lastAnnotation = 0, failed = false, lastStoryFrame = "";
     const store = new StudioFrames(innerWidth < 768 ? "mobile" : "desktop");
-    const preview = new StudioPreview(available => {
-      if (alive) el.dataset.previewSheet = available ? "ready" : "failed";
-    });
-    let loadingFrame = false, latestTarget = 0, latestScene = "travel", exact = false;
+    const pending = new Set<number>();
+    let nextRequest = 0, latestTarget = 0, latestScene = "travel", exact = false;
+    el.dataset.nativeFrame = "pending";
     let retryAfter = 0, failures = 0;
     const matte = new TravelMatte(innerWidth < 768 ? 768 : 1280);
     const mask = edgeMask(), photo = document.createElement("canvas"); photo.width = 1280; photo.height = 720;
@@ -136,19 +135,15 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
         retryAfter = 0;
       }
       requested = desired;
-      if (active !== "travel" && (!exact || frame !== desired)) {
-        // Never sample the omitted interval between frames 120 and 673 in film two.
-        const nearest = Math.max(active === "anatomy" && desired >= 673 ? 680 : 0, Math.round(desired / 8) * 8);
-        if (nearest !== frame && Math.abs(nearest - desired) <= Math.abs(frame - desired)) {
-          const tile = preview.get(nearest);
-          if (tile) prepare(tile, nearest, false);
-        }
-      }
-      if (!loadingFrame && !failed && now >= retryAfter && (!exact || frame !== desired || !prepared)) {
-        loadingFrame = true;
+      // Stagger a small number of native-frame requests. Never queue past scroll positions.
+      if (!failed && now >= retryAfter && now >= nextRequest && pending.size < 4 &&
+          !pending.has(desired) && (!exact || frame !== desired || !prepared)) {
+        pending.add(desired);
+        nextRequest = now + 30;
         store.get(desired).then(image => {
           if (!alive) return;
-          // While the sheet is in transit, an arriving frame can still advance the film.
+          el.dataset.nativeFrame = "ready";
+          // A delayed frame may advance the current scene, including during reverse scroll.
           if (latestTarget === desired || (active === latestScene &&
               Math.abs(desired - latestTarget) < Math.abs(frame - latestTarget))) {
             prepare(image, desired);
@@ -158,11 +153,12 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
           if (!alive || latestTarget !== desired || active !== latestScene) return;
           if (++failures >= 2) {
             failed = true;
+            if (el.dataset.nativeFrame === "pending") el.dataset.nativeFrame = "failed";
             status("error");
           } else {
             retryAfter = performance.now() + 180;
           }
-        }).finally(() => { loadingFrame = false; });
+        }).finally(() => { pending.delete(desired); });
       }
       const paint = `${frame},${box.x.toFixed(2)},${box.y.toFixed(2)},${box.w.toFixed(2)},${blend.toFixed(3)},${rotation.toFixed(4)}`;
       if (prepared && paint !== lastPaint) {
@@ -182,7 +178,7 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
         }
         if (blend > 0 || !cutout) { ctx.globalAlpha = cutout ? blend : 1; ctx.drawImage(photo, x, y, box.w, box.h); }
         ctx.restore();
-        el.dataset.frameQuality = exact ? "full" : "preview"; el.dataset.frame = String(frame); el.dataset.scene = active; el.dataset.progress = p.toFixed(4); el.dataset.dock = end ? keys.at(-1)!.id : a.id; el.dataset.x = centerX.toFixed(1); el.dataset.y = centerY.toFixed(1);
+        el.dataset.frameQuality = exact ? "full" : "poster"; el.dataset.frame = String(frame); el.dataset.scene = active; el.dataset.progress = p.toFixed(4); el.dataset.dock = end ? keys.at(-1)!.id : a.id; el.dataset.x = centerX.toFixed(1); el.dataset.y = centerY.toFixed(1);
         el.dataset.left = (centerX - halfWidth).toFixed(2); el.dataset.right = (centerX + halfWidth).toFixed(2);
       }
       const storyFrame = `${active}:${frame}`;

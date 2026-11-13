@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <ExperienceProvider>
-      <link rel="preload" as="image" href="/assets/studio/scrub-preview.webp" media="(prefers-reduced-motion: no-preference)" />
+      <link rel="preload" as="image" href="/assets/studio/poster.webp" media="(prefers-reduced-motion: no-preference)" />
       <TyreLoader />
       <a className="skip-link" href="#story">
         Skip cinematic experience

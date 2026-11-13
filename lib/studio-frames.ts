@@ -17,7 +17,7 @@ async function decode(blob: Blob): Promise<DecodedFrame> {
   }
 }
 
-/** The renderer requests one full-size frame at a time and retains recent shots for reverse scrolling. */
+/** Retain recently displayed native frames for reverse scrolling. */
 export class StudioFrames {
   private decoded = new Map<number, DecodedFrame>();
   private controller = new AbortController();
@@ -51,27 +51,5 @@ export class StudioFrames {
     this.controller.abort();
     this.decoded.forEach(release);
     this.decoded.clear();
-  }
-}
-
-/** One small image covers both films, including the jump into the anatomy sequence. */
-export class StudioPreview {
-  private sheet = new Image();
-  private tile = document.createElement("canvas");
-  private ctx = this.tile.getContext("2d")!;
-  constructor(onLoad: (available: boolean) => void) {
-    this.sheet.onload = () => onLoad(true);
-    this.sheet.onerror = () => onLoad(false);
-    this.tile.width = 256;
-    this.tile.height = 144;
-    this.sheet.src = "/assets/studio/scrub-preview.webp";
-  }
-  get(index: number) {
-    if (!this.sheet.complete || !this.sheet.naturalWidth) return null;
-    const tile = index / 8;
-    const { width, height } = this.tile;
-    this.ctx.drawImage(this.sheet, (tile % 12) * width, Math.floor(tile / 12) * height,
-      width, height, 0, 0, width, height);
-    return this.tile;
   }
 }

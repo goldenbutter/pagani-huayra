@@ -11,6 +11,17 @@ try {
         await new Promise(resolve => setTimeout(resolve, 180));
         await route.continue().catch(() => {});
       });
+      await page.addInitScript(() => {
+        window.filmSources = [];
+        const draw = CanvasRenderingContext2D.prototype.drawImage;
+        CanvasRenderingContext2D.prototype.drawImage = function(image, ...args) {
+          // The film compositor scales each source to its 1280 x 720 photo canvas.
+          if (this.globalCompositeOperation === "source-over" && this.canvas.width === 1280 && args.length === 4 && args[2] === 1280 && args[3] === 720) {
+            window.filmSources.push(image.naturalWidth || image.width);
+          }
+          return draw.call(this, image, ...args);
+        };
+      });
       await page.goto(process.env.BASE_URL || "http://127.0.0.1:3002", { waitUntil: "domcontentloaded" });
       await page.waitForFunction(() => document.querySelector(".travelling-car")?.dataset.targetFrame !== undefined);
       const result = await page.evaluate(async id => {
@@ -40,12 +51,15 @@ try {
         const c = document.querySelector(".travelling-car");
         return Number(c.dataset.frame) > 0 && c.dataset.frame === c.dataset.targetFrame && c.dataset.frameQuality === "full";
       }, undefined, { timeout: 10000 });
-      results.push({ width, id, ...result });
+      const sourceWidths = await page.evaluate(() => [...new Set(window.filmSources)]);
+      results.push({ width, id, ...result, sourceWidths: sourceWidths.join(",") });
       await page.close();
     }
   }
   console.table(results);
   for (const r of results) {
+    assert(r.sourceWidths.split(",").every(w => Number(w) >= (r.width < 768 ? 768 : 1280)),
+      "An undersized image was enlarged in the film: " + JSON.stringify(r));
     assert(r.firstPaintMs !== null && r.firstPaintMs < 1000 && r.distinctFramesDuringScroll >= 8,
       'First uninterrupted scroll should paint multiple frames: ' + JSON.stringify(r));
   }

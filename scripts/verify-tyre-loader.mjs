@@ -11,7 +11,7 @@ for (const engine of [chromium, webkit]) {
       const page = await browser.newPage({ viewport: { width, height: width === 390 ? 844 : 900 }, isMobile: width === 390 });
       let release;
       const pending = new Promise(resolve => { release = resolve; });
-      await page.route("**/scrub-preview.webp", async route => {
+      await page.route("**/assets/studio/*/0000.webp", async route => {
         await pending;
         await route.continue().catch(() => {});
       });
@@ -30,8 +30,8 @@ for (const engine of [chromium, webkit]) {
     }
     for (const scenario of ["failed", "stalled", "scroll", "reduced", "deep-link", "no-js"]) {
       const page = await browser.newPage({ reducedMotion: scenario === "reduced" ? "reduce" : "no-preference", javaScriptEnabled: scenario !== "no-js" });
-      if (scenario === "failed") await page.route("**/scrub-preview.webp", route => route.abort());
-      if (scenario === "stalled" || scenario === "scroll") await page.route("**/scrub-preview.webp", () => {});
+      if (scenario === "failed") await page.route("**/assets/studio/*/0000.webp", route => route.abort());
+      if (scenario === "stalled" || scenario === "scroll") await page.route("**/assets/studio/*/0000.webp", () => {});
       await page.goto(base + (scenario === "deep-link" ? "/#engineering" : ""), { waitUntil: "domcontentloaded" });
       if (scenario === "scroll" || scenario === "stalled") {
         await page.waitForFunction(() => document.querySelector(".tyre-readout output")?.value === "55%");

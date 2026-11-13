@@ -33,13 +33,13 @@ export default function TyreLoader() {
       try { sessionStorage.setItem(sessionKey, "seen"); } catch {}
     }
     function tick(now: number) {
-      if (!html.dataset.tyreIntro || motion.matches || canvas?.dataset.previewSheet === "failed") {
+      if (!html.dataset.tyreIntro || motion.matches || canvas?.dataset.nativeFrame === "failed") {
         dismiss();
         return;
       }
-      // Hydration, the painted car, and the shared scrub sheet are the three milestones.
+      // Hydration, the painted car, and the first native frame are the three milestones.
       const target = 0.15 + (canvas?.dataset.frame !== undefined ? 0.4 : 0)
-                          + (canvas?.dataset.previewSheet === "ready" ? 0.45 : 0);
+                          + (canvas?.dataset.nativeFrame === "ready" ? 0.45 : 0);
       progress = Math.min(target, progress + (now - last) / 850);
       last = now;
       const distance = (rail.clientWidth - runner.offsetWidth) * progress;
