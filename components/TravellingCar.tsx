@@ -41,7 +41,9 @@ export default function TravellingCar({ selected, onSelectPart }: { selected: st
     let alive = true, raf = 0, frame = 0, requested = -1, prepared = false, travelWanted = true, cutout: HTMLCanvasElement | null = null;
     let width = 0, height = 0, lastPaint = "", lastAnnotation = 0, failed = false, lastStoryFrame = "";
     const store = new StudioFrames(innerWidth < 768 ? "mobile" : "desktop");
-    const preview = new StudioPreview();
+    const preview = new StudioPreview(available => {
+      if (alive) el.dataset.previewSheet = available ? "ready" : "failed";
+    });
     let loadingFrame = false, latestTarget = 0, latestScene = "travel", exact = false;
     let retryAfter = 0, failures = 0;
     const matte = new TravelMatte(innerWidth < 768 ? 768 : 1280);

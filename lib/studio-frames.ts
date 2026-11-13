@@ -59,7 +59,9 @@ export class StudioPreview {
   private sheet = new Image();
   private tile = document.createElement("canvas");
   private ctx = this.tile.getContext("2d")!;
-  constructor() {
+  constructor(onLoad: (available: boolean) => void) {
+    this.sheet.onload = () => onLoad(true);
+    this.sheet.onerror = () => onLoad(false);
     this.tile.width = 256;
     this.tile.height = 144;
     this.sheet.src = "/assets/studio/scrub-preview.webp";

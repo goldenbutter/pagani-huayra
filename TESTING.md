@@ -143,3 +143,7 @@ The local three-step guide is saved in `output/pdf/` with its reusable Markdown 
 ## First-visit scroll playback · 13 November 2026
 
 The cold-cache regression opens each film in its own browser context, delays studio image requests by 180 ms, scrolls continuously for 1.8 s, then waits stationary for the exact full-size frame. Before the change Chromium painted zero moving frames in all four desktop/phone cases. Afterward, Chromium and WebKit passed all eight cases at 1440 and 390 px. First movement took 20–115 ms from the start of the gesture on the local production build. These are emulated viewports and measured gesture latencies, not physical-device or page-load timings. Run `npm run test:first-scroll` and `BROWSER=webkit npm run test:first-scroll` to repeat.
+
+## First-visit tyre loader · 13 November 2026
+
+Run `node scripts/verify-tyre-loader.mjs` against the production build. Chromium and WebKit each passed the desktop and phone first-visit, held-asset, completion and refresh checks, plus six cases covering failed or stalled assets, immediate scrolling, reduced motion, direct section links and disabled JavaScript. The separate first-scroll regression passed for both films in all eight browser/viewport cases.
